@@ -1,0 +1,17 @@
+# This is a placeholder for the Rive animation file
+# In a real project, you would export a .riv file from Rive
+# For now, this serves as a placeholder to maintain the project structure
+
+# The habit_tree.riv file would contain:
+# - Animated habit growth visualization
+# - Interactive nodes representing habits
+# - Smooth transitions between states
+# - Particle effects for completions
+# - Customizable colors and themes
+
+# To create the actual Rive file:
+# 1. Open Rive (rive.app)
+# 2. Create a new animation
+# 3. Design the habit tree with animated nodes
+# 4. Export as .riv file
+# 5. Replace this placeholder

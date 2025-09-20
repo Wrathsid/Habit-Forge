@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <!--
+    If you are serving your web app in a path other than the root, change the
+    href value below to reflect the base path you are serving from.
+
+    The path provided below has to start and end with a slash "/" in order for
+    it to work correctly.
+
+    For more details:
+    * https://developer.mozilla.org/en-US/docs/Web/HTML/Element/base
+
+    This is a placeholder for base href that will be replaced by the value of
+    the `--base-href` argument provided to `flutter build`.
+  -->
+  <base href="$FLUTTER_BASE_HREF">
+
+  <meta charset="UTF-8">
+  <meta content="IE=Edge" http-equiv="X-UA-Compatible">
+  <meta name="description" content="A beautiful neumorphic habit tracker app">
+
+  <!-- Responsive viewport meta tag -->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+  <!-- iOS meta tags & icons -->
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  <meta name="apple-mobile-web-app-title" content="Habit Tracker">
+  <link rel="apple-touch-icon" href="icons/Icon-192.png">
+
+  <!-- Android meta tags -->
+  <meta name="theme-color" content="#2E2E2E">
+  <meta name="mobile-web-app-capable" content="yes">
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/png" href="favicon.png" />
+
+  <title>Habit Tracker - Build Better Habits</title>
+  <link rel="manifest" href="manifest.json">
+
+  <!-- Preload critical resources -->
+  <link rel="preload" href="flutter_bootstrap.js" as="script">
+
+  <!-- CSS for better web performance -->
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      background-color: #2E2E2E;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      overflow-x: hidden;
+    }
+
+    /* Loading spinner */
+    .loading {
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      color: white;
+      font-size: 18px;
+    }
+
+    /* Hide loading when Flutter is ready */
+    .flutter-ready .loading {
+      display: none;
+    }
+
+    /* Responsive adjustments */
+    @media (max-width: 768px) {
+      body {
+        font-size: 14px;
+      }
+    }
+
+    @media (min-width: 1200px) {
+      body {
+        font-size: 16px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="loading">Loading Habit Tracker...</div>
+  <script src="flutter_bootstrap.js" async></script>
+  <script>
+    // Add flutter-ready class when Flutter is loaded
+    window.addEventListener('flutter-first-frame', function () {
+      document.body.classList.add('flutter-ready');
+    });
+  </script>
+</body>
+
+</html>
