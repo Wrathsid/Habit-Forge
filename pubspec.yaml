@@ -1,5 +1,5 @@
-name: habit_tracker
-description: A beautiful neumorphic habit tracker app
+name: habitforge
+description: Advanced Habit Tracker with Neumorphic Design - Build better habits with beautiful UI, comprehensive analytics, and gamification features
 publish_to: 'none'
 version: 1.0.0+1
 

@@ -1,0 +1,117 @@
+name: Build and Release APK
+
+on:
+  push:
+    tags:
+      - 'v*.*.*'
+  workflow_dispatch:
+    inputs:
+      version:
+        description: 'Version to release (e.g., v1.0.0)'
+        required: true
+        default: 'v1.0.0'
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+      
+    - name: Setup Java
+      uses: actions/setup-java@v4
+      with:
+        distribution: 'zulu'
+        java-version: '17'
+        
+    - name: Setup Flutter
+      uses: subosito/flutter-action@v2
+      with:
+        flutter-version: '3.24.0'
+        channel: 'stable'
+        cache: true
+        
+    - name: Get Flutter dependencies
+      run: flutter pub get
+      
+    - name: Verify Flutter installation
+      run: flutter doctor
+      
+    - name: Create keystore
+      run: |
+        keytool -genkey -v -keystore android/app/upload-keystore.jks -keyalg RSA -keysize 2048 -validity 10000 -alias upload -storepass ${{ secrets.STORE_PASSWORD }} -keypass ${{ secrets.KEY_PASSWORD }} -dname "CN=HabitForge, OU=Development, O=HabitForge, L=City, S=State, C=US"
+        
+    - name: Build APK
+      run: flutter build apk --release
+      env:
+        KEY_ALIAS: upload
+        KEY_PASSWORD: ${{ secrets.KEY_PASSWORD }}
+        STORE_PASSWORD: ${{ secrets.STORE_PASSWORD }}
+        STORE_FILE: android/app/upload-keystore.jks
+        
+    - name: Build App Bundle (AAB)
+      run: flutter build appbundle --release
+      env:
+        KEY_ALIAS: upload
+        KEY_PASSWORD: ${{ secrets.KEY_PASSWORD }}
+        STORE_PASSWORD: ${{ secrets.STORE_PASSWORD }}
+        STORE_FILE: android/app/upload-keystore.jks
+        
+    - name: Get version from tag
+      id: get_version
+      run: |
+        if [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
+          echo "VERSION=${{ github.event.inputs.version }}" >> $GITHUB_OUTPUT
+        else
+          echo "VERSION=${GITHUB_REF#refs/tags/}" >> $GITHUB_OUTPUT
+        fi
+        
+    - name: Create Release
+      uses: softprops/action-gh-release@v1
+      with:
+        tag_name: ${{ steps.get_version.outputs.VERSION }}
+        name: HabitForge ${{ steps.get_version.outputs.VERSION }}
+        body: |
+          ## 🎉 HabitForge ${{ steps.get_version.outputs.VERSION }}
+          
+          ### 📱 What's New
+          - Enhanced neumorphic design with advanced effects
+          - Improved habit tracking and analytics
+          - Better user experience and performance
+          
+          ### 📥 Download
+          - **APK**: For direct installation on Android devices
+          - **AAB**: For Google Play Store submission
+          
+          ### 📋 Installation Instructions
+          1. Download the APK file
+          2. Enable "Install from unknown sources" in your Android settings
+          3. Tap the downloaded APK to install
+          4. Enjoy building better habits! 🚀
+          
+          ### 🔧 Requirements
+          - Android 5.0 (API level 21) or higher
+          - 50MB free storage space
+          
+          ### 🐛 Bug Reports
+          If you encounter any issues, please report them on our [GitHub Issues](https://github.com/${{ github.repository }}/issues) page.
+          
+        files: |
+          build/app/outputs/flutter-apk/app-release.apk
+          build/app/outputs/bundle/release/app-release.aab
+        draft: false
+        prerelease: false
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        
+    - name: Upload APK to release
+      uses: actions/upload-release-asset@v1
+      if: failure()
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        upload_url: ${{ steps.create_release.outputs.upload_url }}
+        asset_path: build/app/outputs/flutter-apk/app-release.apk
+        asset_name: habitforge-${{ steps.get_version.outputs.VERSION }}.apk
+        asset_content_type: application/vnd.android.package-archive

@@ -6,7 +6,7 @@ plugins {
 }
 
 android {
-    namespace = "com.example.habit_tracker"
+    namespace = "com.habitforge.app"
     compileSdk = flutter.compileSdkVersion
     ndkVersion = flutter.ndkVersion
 
@@ -21,21 +21,28 @@ android {
     }
 
     defaultConfig {
-        // TODO: Specify your own unique Application ID (https://developer.android.com/studio/build/application-id.html).
-        applicationId = "com.example.habit_tracker"
-        // You can update the following values to match your application needs.
-        // For more information, see: https://flutter.dev/to/review-gradle-config.
+        applicationId = "com.habitforge.app"
         minSdk = flutter.minSdkVersion
         targetSdk = flutter.targetSdkVersion
         versionCode = flutter.versionCode
         versionName = flutter.versionName
     }
 
+    signingConfigs {
+        create("release") {
+            keyAlias = project.findProperty("keyAlias") as String? ?: System.getenv("KEY_ALIAS")
+            keyPassword = project.findProperty("keyPassword") as String? ?: System.getenv("KEY_PASSWORD")
+            storeFile = file(project.findProperty("storeFile") as String? ?: System.getenv("STORE_FILE") ?: "app/upload-keystore.jks")
+            storePassword = project.findProperty("storePassword") as String? ?: System.getenv("STORE_PASSWORD")
+        }
+    }
+
     buildTypes {
         release {
-            // TODO: Add your own signing config for the release build.
-            // Signing with the debug keys for now, so `flutter run --release` works.
-            signingConfig = signingConfigs.getByName("debug")
+            signingConfig = signingConfigs.getByName("release")
+            isMinifyEnabled = true
+            isShrinkResources = true
+            proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
         }
     }
 }
