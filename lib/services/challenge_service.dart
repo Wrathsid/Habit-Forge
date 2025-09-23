@@ -349,15 +349,24 @@ class ChallengeService {
     try {
       final challenge = _challenges.firstWhere((c) => c.id == challengeId);
       final totalParticipants = challenge.participants.length;
-    final completedParticipants = challenge.progress.length;
-    final completionRate = totalParticipants > 0 ? completedParticipants / totalParticipants : 0.0;
+      final completedParticipants = challenge.progress.length;
+      final completionRate = totalParticipants > 0 ? completedParticipants / totalParticipants : 0.0;
 
-    return {
-      'totalParticipants': totalParticipants,
-      'completedParticipants': completedParticipants,
-      'completionRate': completionRate,
-      'daysRemaining': challenge.remainingTime.inDays,
-      'isExpiringSoon': challenge.isExpiringSoon,
-    };
+      return {
+        'totalParticipants': totalParticipants,
+        'completedParticipants': completedParticipants,
+        'completionRate': completionRate,
+        'daysRemaining': challenge.remainingTime.inDays,
+        'isExpiringSoon': challenge.isExpiringSoon,
+      };
+    } catch (e) {
+      return {
+        'totalParticipants': 0,
+        'completedParticipants': 0,
+        'completionRate': 0.0,
+        'daysRemaining': 0,
+        'isExpiringSoon': false,
+      };
+    }
   }
 }

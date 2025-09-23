@@ -28,6 +28,7 @@ import 'screens/gamification_screen.dart';
 import 'screens/advanced_customization_screen.dart';
 import 'screens/bulk_operations_screen.dart';
 import 'screens/friends_screen.dart';
+import 'screens/neumorphic_demo_screen.dart';
 import 'widgets/habit_card.dart';
 import 'widgets/habit_templates.dart';
 import 'widgets/neumorphic_box.dart';
@@ -207,12 +208,7 @@ class AppThemes {
       primary: Colors.greenAccent,
     ),
     extensions: const <ThemeExtension<dynamic>>[
-      NeumorphicColors(
-        background: Color(0xFF2E2E2E),
-        shadowDark: Color(0xFF1C1C1C),
-        shadowLight: Color(0xFF4A4A4A),
-        textColor: Colors.white70,
-      )
+      NeumorphicColors.dark,
     ],
   );
 
@@ -226,12 +222,7 @@ class AppThemes {
       primary: Colors.green,
     ),
     extensions: const <ThemeExtension<dynamic>>[
-      NeumorphicColors(
-        background: Color(0xFFE0E0E0),
-        shadowDark: Color(0xFFA3A3A3),
-        shadowLight: Color(0xFFFFFFFF),
-        textColor: Colors.black87,
-      )
+      NeumorphicColors.light,
     ],
   );
 }
@@ -298,10 +289,30 @@ class _HomePageState extends State<HomePage> {
           },
         ),
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: _addHabit,
-        backgroundColor: Theme.of(context).colorScheme.primary,
-        child: const Icon(LucideIcons.plus, color: Colors.white),
+      floatingActionButton: Column(
+        mainAxisAlignment: MainAxisAlignment.end,
+        children: [
+          FloatingActionButton(
+            heroTag: "neumorphic_demo",
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => const NeumorphicDemoScreen(),
+                ),
+              );
+            },
+            backgroundColor: colors.accent,
+            child: const Icon(Icons.palette, color: Colors.white),
+          ),
+          const SizedBox(height: 16),
+          FloatingActionButton(
+            heroTag: "add_habit",
+            onPressed: _addHabit,
+            backgroundColor: Theme.of(context).colorScheme.primary,
+            child: const Icon(LucideIcons.plus, color: Colors.white),
+          ),
+        ],
       ),
     );
   }

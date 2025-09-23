@@ -94,7 +94,7 @@ class HapticService {
         print('Haptic feedback error: $e');
       }
       // Disable haptic feedback if it fails
-      _isHapticAvailable = false;
+      // Note: _isHapticAvailable is a getter, cannot be set directly
     }
   }
 
@@ -112,7 +112,7 @@ class HapticService {
         print('Haptic feedback error: $e');
       }
       // Disable haptic feedback if it fails
-      _isHapticAvailable = false;
+      // Note: _isHapticAvailable is a getter, cannot be set directly
     }
   }
 
@@ -136,7 +136,7 @@ class HapticService {
         print('Haptic feedback error: $e');
       }
       // Disable haptic feedback if it fails
-      _isHapticAvailable = false;
+      // Note: _isHapticAvailable is a getter, cannot be set directly
     }
   }
 

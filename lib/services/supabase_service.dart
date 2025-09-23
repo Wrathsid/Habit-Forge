@@ -82,7 +82,7 @@ class SupabaseService {
         .select()
         .maybeSingle();
     
-    return response;
+    return response ?? {};
   }
 
   Future<Map<String, dynamic>> updateHabit(String id, Map<String, dynamic> updates) async {
@@ -101,7 +101,7 @@ class SupabaseService {
         .select()
         .maybeSingle();
     
-    return response;
+    return response ?? {};
   }
 
   Future<void> deleteHabit(String id) async {
@@ -133,7 +133,7 @@ class SupabaseService {
         .select()
         .maybeSingle();
     
-    return response;
+    return response ?? {};
   }
 
   Future<List<Map<String, dynamic>>> getHabitCompletions(String habitId) async {
@@ -167,7 +167,7 @@ class SupabaseService {
         .select()
         .maybeSingle();
     
-    return response;
+    return response ?? {};
   }
 
   Future<List<Map<String, dynamic>>> getMoods() async {
@@ -200,7 +200,7 @@ class SupabaseService {
         .select()
         .maybeSingle();
     
-    return response;
+    return response ?? {};
   }
 
   Future<List<Map<String, dynamic>>> getAchievements() async {
@@ -233,7 +233,7 @@ class SupabaseService {
         .select()
         .maybeSingle();
     
-    return response;
+    return response ?? {};
   }
 
   Future<Map<String, dynamic>?> getUserProgress() async {
@@ -247,7 +247,7 @@ class SupabaseService {
         .eq('user_id', currentUser!.id)
         .maybeSingle();
     
-    return response;
+    return response ?? {};
   }
 
   // Social Features
@@ -281,7 +281,7 @@ class SupabaseService {
         .select()
         .maybeSingle();
     
-    return response;
+    return response ?? {};
   }
 
   // Real-time subscriptions
