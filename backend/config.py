@@ -3,10 +3,18 @@ Environment configuration for FastAPI backend
 """
 
 import os
+import logging
 from dotenv import load_dotenv
 
+# Setup logger
+logger = logging.getLogger(__name__)
+
 # Load environment variables
-load_dotenv()
+try:
+    load_dotenv()
+except Exception as e:
+    logger.warning(f"Could not load .env file: {e}")
+    logger.info("Continuing with system environment variables only")
 
 class Config:
     """Application configuration"""
@@ -63,4 +71,8 @@ class Config:
 
 # Validate configuration on import (only in production)
 if os.getenv("APP_ENV", "development") == "production":
-    Config.validate_config()
+    try:
+        Config.validate_config()
+    except ValueError as e:
+        logger.error(f"Configuration validation failed: {e}")
+        raise

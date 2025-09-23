@@ -18,6 +18,12 @@ async def verify_token(
     supabase: SupabaseClient = Depends(lambda: SupabaseClient())
 ):
     """Verify Supabase JWT token"""
+    if not token or not token.strip():
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail="Token is required"
+        )
+    
     try:
         # This would typically verify the JWT token with Supabase
         # For now, we'll return a simple response

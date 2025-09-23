@@ -41,6 +41,9 @@ class SupabaseClient:
     # Habit operations
     async def get_habits(self, user_id: str) -> List[Dict[str, Any]]:
         """Get all habits for a user"""
+        if not self.client:
+            logger.warning("Supabase client not initialized - returning empty list")
+            return []
         try:
             response = self.client.table('habits').select('*').eq('user_id', user_id).execute()
             return response.data
@@ -50,6 +53,9 @@ class SupabaseClient:
     
     async def create_habit(self, habit_data: Dict[str, Any]) -> Dict[str, Any]:
         """Create a new habit"""
+        if not self.client:
+            logger.warning("Supabase client not initialized - cannot create habit")
+            raise Exception("Database not available")
         try:
             response = self.client.table('habits').insert(habit_data).execute()
             return response.data[0] if response.data else {}
@@ -59,6 +65,9 @@ class SupabaseClient:
     
     async def update_habit(self, habit_id: str, updates: Dict[str, Any]) -> Dict[str, Any]:
         """Update a habit"""
+        if not self.client:
+            logger.warning("Supabase client not initialized - cannot update habit")
+            raise Exception("Database not available")
         try:
             response = self.client.table('habits').update(updates).eq('id', habit_id).execute()
             return response.data[0] if response.data else {}
@@ -68,6 +77,9 @@ class SupabaseClient:
     
     async def delete_habit(self, habit_id: str) -> bool:
         """Delete a habit"""
+        if not self.client:
+            logger.warning("Supabase client not initialized - cannot delete habit")
+            raise Exception("Database not available")
         try:
             response = self.client.table('habits').delete().eq('id', habit_id).execute()
             return True
@@ -78,6 +90,9 @@ class SupabaseClient:
     # Habit completion operations
     async def mark_habit_complete(self, habit_id: str, user_id: str, completion_date: str) -> Dict[str, Any]:
         """Mark a habit as complete for a specific date"""
+        if not self.client:
+            logger.warning("Supabase client not initialized - cannot mark habit complete")
+            raise Exception("Database not available")
         try:
             completion_data = {
                 'habit_id': habit_id,
@@ -93,6 +108,9 @@ class SupabaseClient:
     
     async def get_habit_completions(self, habit_id: str, user_id: str) -> List[Dict[str, Any]]:
         """Get habit completions for a specific habit"""
+        if not self.client:
+            logger.warning("Supabase client not initialized - returning empty list")
+            return []
         try:
             response = self.client.table('habit_completions').select('*').eq('habit_id', habit_id).eq('user_id', user_id).execute()
             return response.data
@@ -103,6 +121,9 @@ class SupabaseClient:
     # User progress operations
     async def get_user_progress(self, user_id: str) -> Optional[Dict[str, Any]]:
         """Get user progress"""
+        if not self.client:
+            logger.warning("Supabase client not initialized - returning None")
+            return None
         try:
             response = self.client.table('user_progress').select('*').eq('user_id', user_id).execute()
             return response.data[0] if response.data else None
@@ -112,6 +133,9 @@ class SupabaseClient:
     
     async def update_user_progress(self, user_id: str, progress_data: Dict[str, Any]) -> Dict[str, Any]:
         """Update user progress"""
+        if not self.client:
+            logger.warning("Supabase client not initialized - cannot update user progress")
+            raise Exception("Database not available")
         try:
             progress_data['user_id'] = user_id
             response = self.client.table('user_progress').upsert(progress_data).execute()
@@ -123,6 +147,9 @@ class SupabaseClient:
     # Mood tracking operations
     async def save_mood_checkin(self, mood_data: Dict[str, Any]) -> Dict[str, Any]:
         """Save mood check-in"""
+        if not self.client:
+            logger.warning("Supabase client not initialized - cannot save mood checkin")
+            raise Exception("Database not available")
         try:
             response = self.client.table('mood_checkins').upsert(mood_data).execute()
             return response.data[0] if response.data else {}
@@ -132,6 +159,9 @@ class SupabaseClient:
     
     async def get_mood_checkins(self, user_id: str) -> List[Dict[str, Any]]:
         """Get mood check-ins for a user"""
+        if not self.client:
+            logger.warning("Supabase client not initialized - returning empty list")
+            return []
         try:
             response = self.client.table('mood_checkins').select('*').eq('user_id', user_id).order('checkin_date', desc=True).execute()
             return response.data
@@ -142,6 +172,9 @@ class SupabaseClient:
     # Analytics operations
     async def get_habit_analytics(self, user_id: str) -> Dict[str, Any]:
         """Get habit analytics for a user"""
+        if not self.client:
+            logger.warning("Supabase client not initialized - returning empty analytics")
+            return {'habits': [], 'streaks': [], 'progress': {}}
         try:
             # Get habits with completions
             habits_response = self.client.table('habits').select('*, habit_completions(*)').eq('user_id', user_id).execute()

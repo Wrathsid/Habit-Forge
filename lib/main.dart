@@ -34,51 +34,122 @@ import 'widgets/neumorphic_box.dart';
 import 'widgets/neumorphic_colors.dart';
 
 void main() async {
-  WidgetsFlutterBinding.ensureInitialized();
-  
-  // Initialize environment configuration
-  await EnvConfig.initialize();
-  
-  // Initialize local services
-  await HabitService.instance.loadHabits();
-  await AchievementService.instance.initialize();
-  await MoodService.instance.initialize();
-  await SocialService.instance.initialize();
-  await ChallengeService.instance.initialize();
-  
-  // Initialize platform-specific services
-  if (!kIsWeb) {
-    // Mobile/Desktop specific services
+  try {
+    WidgetsFlutterBinding.ensureInitialized();
+    
+    // Initialize environment configuration
+    await EnvConfig.initialize();
+    
+    // Initialize local services with error handling
     try {
-      await NotificationService().initialize();
-      await SmartNotificationService.instance.initialize();
-      print('Mobile services initialized successfully');
+      await HabitService.instance.loadHabits();
+      if (kDebugMode) {
+        print('Habit service initialized successfully');
+      }
     } catch (e) {
-      print('Mobile services initialization failed: $e');
+      if (kDebugMode) {
+        print('Habit service initialization failed: $e');
+      }
     }
     
-    // Initialize haptic and voice services (not available on web)
     try {
-      await VoiceService.instance.initialize();
-      print('Voice service initialized successfully');
+      await AchievementService.instance.initialize();
+      if (kDebugMode) {
+        print('Achievement service initialized successfully');
+      }
     } catch (e) {
-      print('Voice service initialization failed: $e');
+      if (kDebugMode) {
+        print('Achievement service initialization failed: $e');
+      }
     }
-  } else {
-    print('Running on web - skipping mobile-specific services');
-  }
-  
-  // Initialize backend services
-  try {
-    await SupabaseService.instance.initialize();
-    await FastApiService.instance.initialize();
-    print('Backend services initialized successfully');
+    
+    try {
+      await MoodService.instance.initialize();
+      if (kDebugMode) {
+        print('Mood service initialized successfully');
+      }
+    } catch (e) {
+      if (kDebugMode) {
+        print('Mood service initialization failed: $e');
+      }
+    }
+    
+    try {
+      await SocialService.instance.initialize();
+      if (kDebugMode) {
+        print('Social service initialized successfully');
+      }
+    } catch (e) {
+      if (kDebugMode) {
+        print('Social service initialization failed: $e');
+      }
+    }
+    
+    try {
+      await ChallengeService.instance.initialize();
+      if (kDebugMode) {
+        print('Challenge service initialized successfully');
+      }
+    } catch (e) {
+      if (kDebugMode) {
+        print('Challenge service initialization failed: $e');
+      }
+    }
+    
+    // Initialize platform-specific services
+    if (!kIsWeb) {
+      // Mobile/Desktop specific services
+      try {
+        await NotificationService().initialize();
+        await SmartNotificationService.instance.initialize();
+        if (kDebugMode) {
+          print('Mobile services initialized successfully');
+        }
+      } catch (e) {
+        if (kDebugMode) {
+          print('Mobile services initialization failed: $e');
+        }
+      }
+      
+      // Initialize haptic and voice services (not available on web)
+      try {
+        await VoiceService.instance.initialize();
+        if (kDebugMode) {
+          print('Voice service initialized successfully');
+        }
+      } catch (e) {
+        if (kDebugMode) {
+          print('Voice service initialization failed: $e');
+        }
+      }
+    } else {
+      if (kDebugMode) {
+        print('Running on web - skipping mobile-specific services');
+      }
+    }
+    
+    // Initialize backend services
+    try {
+      await SupabaseService.instance.initialize();
+      await FastApiService.instance.initialize();
+      if (kDebugMode) {
+        print('Backend services initialized successfully');
+      }
+    } catch (e) {
+      if (kDebugMode) {
+        print('Backend services initialization failed: $e');
+        print('App will continue with local-only mode');
+      }
+    }
+    
+    runApp(const HabitTrackerApp());
   } catch (e) {
-    print('Backend services initialization failed: $e');
-    print('App will continue with local-only mode');
+    if (kDebugMode) {
+      print('Critical error during app initialization: $e');
+    }
+    // Still try to run the app even if initialization fails
+    runApp(const HabitTrackerApp());
   }
-  
-  runApp(const HabitTrackerApp());
 }
 
 // -------------------- APP ROOT --------------------

@@ -32,7 +32,7 @@ class HabitTemplates extends StatelessWidget {
             'Tap any template to quickly create a habit',
             style: TextStyle(
               fontSize: 14,
-              color: colors.textColor.withOpacity(0.7),
+              color: colors.textColor.withValues(alpha: 0.7),
             ),
           ),
           const SizedBox(height: 20),
@@ -84,7 +84,7 @@ class HabitTemplates extends StatelessWidget {
               template.description,
               style: TextStyle(
                 fontSize: 10,
-                color: colors.textColor.withOpacity(0.7),
+                color: colors.textColor.withValues(alpha: 0.7),
               ),
               textAlign: TextAlign.center,
               maxLines: 2,

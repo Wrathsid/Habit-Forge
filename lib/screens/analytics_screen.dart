@@ -170,7 +170,7 @@ class _AnalyticsScreenState extends State<AnalyticsScreen> {
             label,
             style: TextStyle(
               fontSize: 12,
-              color: colors.textColor.withOpacity(0.7),
+              color: colors.textColor.withValues(alpha: 0.7),
             ),
             textAlign: TextAlign.center,
           ),
@@ -439,7 +439,7 @@ class _AnalyticsScreenState extends State<AnalyticsScreen> {
           data['day'],
           style: TextStyle(
             fontSize: 12,
-            color: colors.textColor.withOpacity(0.7),
+            color: colors.textColor.withValues(alpha: 0.7),
           ),
         ),
         const SizedBox(height: 8),
@@ -448,7 +448,7 @@ class _AnalyticsScreenState extends State<AnalyticsScreen> {
           height: 32,
           decoration: BoxDecoration(
             color: progress > 0 
-                ? Theme.of(context).colorScheme.primary.withOpacity(progress)
+                ? Theme.of(context).colorScheme.primary.withValues(alpha: progress)
                 : colors.shadowDark,
             borderRadius: BorderRadius.circular(16),
           ),

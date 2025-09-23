@@ -73,7 +73,7 @@ class _ReminderManagementScreenState extends State<ReminderManagementScreen> {
           Icon(
             LucideIcons.bellOff,
             size: 64,
-            color: colors.textColor.withOpacity(0.5),
+            color: colors.textColor.withValues(alpha: 0.5),
           ),
           const SizedBox(height: 16),
           Text(
@@ -89,7 +89,7 @@ class _ReminderManagementScreenState extends State<ReminderManagementScreen> {
             'Add reminders to your habits to stay on track!',
             style: TextStyle(
               fontSize: 16,
-              color: colors.textColor.withOpacity(0.7),
+              color: colors.textColor.withValues(alpha: 0.7),
             ),
             textAlign: TextAlign.center,
           ),
@@ -156,7 +156,7 @@ class _ReminderManagementScreenState extends State<ReminderManagementScreen> {
                         habit.description,
                         style: TextStyle(
                           fontSize: 14,
-                          color: colors.textColor.withOpacity(0.7),
+                          color: colors.textColor.withValues(alpha: 0.7),
                         ),
                       ),
                     ],
@@ -177,7 +177,7 @@ class _ReminderManagementScreenState extends State<ReminderManagementScreen> {
               children: [
                 Icon(
                   LucideIcons.clock,
-                  color: colors.textColor.withOpacity(0.7),
+                  color: colors.textColor.withValues(alpha: 0.7),
                   size: 16,
                 ),
                 const SizedBox(width: 8),
@@ -185,7 +185,7 @@ class _ReminderManagementScreenState extends State<ReminderManagementScreen> {
                   'Time: ${habit.reminderTime?.format(context) ?? 'Not set'}',
                   style: TextStyle(
                     fontSize: 14,
-                    color: colors.textColor.withOpacity(0.7),
+                    color: colors.textColor.withValues(alpha: 0.7),
                   ),
                 ),
               ],
@@ -195,7 +195,7 @@ class _ReminderManagementScreenState extends State<ReminderManagementScreen> {
               children: [
                 Icon(
                   LucideIcons.calendar,
-                  color: colors.textColor.withOpacity(0.7),
+                  color: colors.textColor.withValues(alpha: 0.7),
                   size: 16,
                 ),
                 const SizedBox(width: 8),
@@ -204,7 +204,7 @@ class _ReminderManagementScreenState extends State<ReminderManagementScreen> {
                     'Days: ${_formatReminderDays(habit.reminderDays)}',
                     style: TextStyle(
                       fontSize: 14,
-                      color: colors.textColor.withOpacity(0.7),
+                      color: colors.textColor.withValues(alpha: 0.7),
                     ),
                   ),
                 ),

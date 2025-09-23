@@ -136,7 +136,7 @@ class _SocialFeedScreenState extends State<SocialFeedScreen> {
           label,
           style: TextStyle(
             fontSize: 12,
-            color: colors.textColor.withOpacity(0.7),
+            color: colors.textColor.withValues(alpha: 0.7),
           ),
         ),
       ],
@@ -199,7 +199,7 @@ class _SocialFeedScreenState extends State<SocialFeedScreen> {
                           '@${post.author.username} • ${post.timeAgo}',
                           style: TextStyle(
                             fontSize: 12,
-                            color: colors.textColor.withOpacity(0.7),
+                            color: colors.textColor.withValues(alpha: 0.7),
                           ),
                         ),
                       ],
@@ -243,7 +243,7 @@ class _SocialFeedScreenState extends State<SocialFeedScreen> {
                 children: post.tags.map((tag) => Container(
                   padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
                   decoration: BoxDecoration(
-                    color: Theme.of(context).colorScheme.primary.withOpacity(0.1),
+                    color: Theme.of(context).colorScheme.primary.withValues(alpha: 0.1),
                     borderRadius: BorderRadius.circular(12),
                   ),
                   child: Text(
@@ -266,7 +266,7 @@ class _SocialFeedScreenState extends State<SocialFeedScreen> {
                 height: 200,
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(12),
-                  color: colors.textColor.withOpacity(0.1),
+                  color: colors.textColor.withValues(alpha: 0.1),
                 ),
                 child: const Center(
                   child: Icon(Icons.image, size: 48),
@@ -284,7 +284,7 @@ class _SocialFeedScreenState extends State<SocialFeedScreen> {
                     children: [
                       Icon(
                         post.isLiked ? LucideIcons.heart : LucideIcons.heart,
-                        color: post.isLiked ? Colors.red : colors.textColor.withOpacity(0.7),
+                        color: post.isLiked ? Colors.red : colors.textColor.withValues(alpha: 0.7),
                         size: 20,
                       ),
                       const SizedBox(width: 4),
@@ -292,7 +292,7 @@ class _SocialFeedScreenState extends State<SocialFeedScreen> {
                         post.likes.toString(),
                         style: TextStyle(
                           fontSize: 14,
-                          color: colors.textColor.withOpacity(0.7),
+                          color: colors.textColor.withValues(alpha: 0.7),
                         ),
                       ),
                     ],
@@ -303,7 +303,7 @@ class _SocialFeedScreenState extends State<SocialFeedScreen> {
                   children: [
                     Icon(
                       LucideIcons.messageCircle,
-                      color: colors.textColor.withOpacity(0.7),
+                      color: colors.textColor.withValues(alpha: 0.7),
                       size: 20,
                     ),
                     const SizedBox(width: 4),
@@ -311,7 +311,7 @@ class _SocialFeedScreenState extends State<SocialFeedScreen> {
                       post.comments.toString(),
                       style: TextStyle(
                         fontSize: 14,
-                        color: colors.textColor.withOpacity(0.7),
+                        color: colors.textColor.withValues(alpha: 0.7),
                       ),
                     ),
                   ],
@@ -319,7 +319,7 @@ class _SocialFeedScreenState extends State<SocialFeedScreen> {
                 const SizedBox(width: 24),
                 Icon(
                   LucideIcons.share,
-                  color: colors.textColor.withOpacity(0.7),
+                  color: colors.textColor.withValues(alpha: 0.7),
                   size: 20,
                 ),
               ],
@@ -338,7 +338,7 @@ class _SocialFeedScreenState extends State<SocialFeedScreen> {
           Icon(
             LucideIcons.messageSquare,
             size: 64,
-            color: colors.textColor.withOpacity(0.3),
+            color: colors.textColor.withValues(alpha: 0.3),
           ),
           const SizedBox(height: 16),
           Text(
@@ -354,7 +354,7 @@ class _SocialFeedScreenState extends State<SocialFeedScreen> {
             'Be the first to share your progress!',
             style: TextStyle(
               fontSize: 14,
-              color: colors.textColor.withOpacity(0.7),
+              color: colors.textColor.withValues(alpha: 0.7),
             ),
           ),
           const SizedBox(height: 24),
@@ -406,8 +406,8 @@ class _SocialFeedScreenState extends State<SocialFeedScreen> {
                       padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
                       decoration: BoxDecoration(
                         color: isSelected 
-                            ? Theme.of(context).colorScheme.primary.withOpacity(0.1)
-                            : Colors.grey.withOpacity(0.1),
+                            ? Theme.of(context).colorScheme.primary.withValues(alpha: 0.1)
+                            : Colors.grey.withValues(alpha: 0.1),
                         borderRadius: BorderRadius.circular(16),
                         border: isSelected 
                             ? Border.all(color: Theme.of(context).colorScheme.primary)

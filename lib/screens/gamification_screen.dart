@@ -62,7 +62,7 @@ class _GamificationScreenState extends State<GamificationScreen> {
               Container(
                 padding: const EdgeInsets.all(16),
                 decoration: BoxDecoration(
-                  color: Theme.of(context).colorScheme.primary.withOpacity(0.1),
+                  color: Theme.of(context).colorScheme.primary.withValues(alpha: 0.1),
                   shape: BoxShape.circle,
                 ),
                 child: Icon(
@@ -88,7 +88,7 @@ class _GamificationScreenState extends State<GamificationScreen> {
                       '${progress.totalXP} XP',
                       style: TextStyle(
                         fontSize: 16,
-                        color: colors.textColor.withOpacity(0.7),
+                        color: colors.textColor.withValues(alpha: 0.7),
                       ),
                     ),
                   ],
@@ -107,7 +107,7 @@ class _GamificationScreenState extends State<GamificationScreen> {
                     'Progress to Level ${progress.currentLevel + 1}',
                     style: TextStyle(
                       fontSize: 14,
-                      color: colors.textColor.withOpacity(0.7),
+                      color: colors.textColor.withValues(alpha: 0.7),
                     ),
                   ),
                   Text(
@@ -123,7 +123,7 @@ class _GamificationScreenState extends State<GamificationScreen> {
               const SizedBox(height: 8),
               LinearProgressIndicator(
                 value: progress.levelProgress,
-                backgroundColor: colors.textColor.withOpacity(0.1),
+                backgroundColor: colors.textColor.withValues(alpha: 0.1),
                 valueColor: AlwaysStoppedAnimation<Color>(
                   Theme.of(context).colorScheme.primary,
                 ),
@@ -134,7 +134,7 @@ class _GamificationScreenState extends State<GamificationScreen> {
                 '${progress.xpToNextLevel} XP to next level',
                 style: TextStyle(
                   fontSize: 12,
-                  color: colors.textColor.withOpacity(0.6),
+                  color: colors.textColor.withValues(alpha: 0.6),
                 ),
               ),
             ],
@@ -211,7 +211,7 @@ class _GamificationScreenState extends State<GamificationScreen> {
     return Container(
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
-        color: colors.textColor.withOpacity(0.05),
+        color: colors.textColor.withValues(alpha: 0.05),
         borderRadius: BorderRadius.circular(12),
       ),
       child: Column(
@@ -230,7 +230,7 @@ class _GamificationScreenState extends State<GamificationScreen> {
             label,
             style: TextStyle(
               fontSize: 12,
-              color: colors.textColor.withOpacity(0.7),
+              color: colors.textColor.withValues(alpha: 0.7),
             ),
             textAlign: TextAlign.center,
           ),
@@ -295,13 +295,13 @@ class _GamificationScreenState extends State<GamificationScreen> {
               padding: const EdgeInsets.all(12),
               decoration: BoxDecoration(
                 color: isUnlocked 
-                    ? achievement.rarityColor.withOpacity(0.1)
-                    : colors.textColor.withOpacity(0.1),
+                    ? achievement.rarityColor.withValues(alpha: 0.1)
+                    : colors.textColor.withValues(alpha: 0.1),
                 shape: BoxShape.circle,
               ),
               child:                 Icon(
                   isUnlocked ? LucideIcons.trophy : LucideIcons.lock,
-                color: isUnlocked ? achievement.rarityColor : colors.textColor.withOpacity(0.5),
+                color: isUnlocked ? achievement.rarityColor : colors.textColor.withValues(alpha: 0.5),
                 size: 24,
               ),
             ),
@@ -318,14 +318,14 @@ class _GamificationScreenState extends State<GamificationScreen> {
                           style: TextStyle(
                             fontSize: 16,
                             fontWeight: FontWeight.bold,
-                            color: isUnlocked ? colors.textColor : colors.textColor.withOpacity(0.6),
+                            color: isUnlocked ? colors.textColor : colors.textColor.withValues(alpha: 0.6),
                           ),
                         ),
                       ),
                       Container(
                         padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
                         decoration: BoxDecoration(
-                          color: achievement.rarityColor.withOpacity(0.1),
+                          color: achievement.rarityColor.withValues(alpha: 0.1),
                           borderRadius: BorderRadius.circular(12),
                         ),
                         child: Text(
@@ -345,8 +345,8 @@ class _GamificationScreenState extends State<GamificationScreen> {
                     style: TextStyle(
                       fontSize: 14,
                       color: isUnlocked 
-                          ? colors.textColor.withOpacity(0.7)
-                          : colors.textColor.withOpacity(0.5),
+                          ? colors.textColor.withValues(alpha: 0.7)
+                          : colors.textColor.withValues(alpha: 0.5),
                     ),
                   ),
                   if (isUnlocked && achievement.unlockedAt != null) ...[
@@ -355,7 +355,7 @@ class _GamificationScreenState extends State<GamificationScreen> {
                       'Unlocked ${_formatDate(achievement.unlockedAt!)}',
                       style: TextStyle(
                         fontSize: 12,
-                        color: colors.textColor.withOpacity(0.6),
+                        color: colors.textColor.withValues(alpha: 0.6),
                       ),
                     ),
                   ],

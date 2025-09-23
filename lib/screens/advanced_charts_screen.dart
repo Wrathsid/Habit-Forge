@@ -4,7 +4,7 @@ import '../models/habit.dart';
 import '../models/mood.dart';
 import '../services/habit_service.dart';
 import '../services/mood_service.dart';
-import '../services/achievement_service.dart';
+// import '../services/achievement_service.dart';
 import '../widgets/neumorphic_box.dart';
 import '../widgets/neumorphic_colors.dart';
 
@@ -24,7 +24,7 @@ class _AdvancedChartsScreenState extends State<AdvancedChartsScreen> {
     final colors = Theme.of(context).extension<NeumorphicColors>()!;
     final habits = HabitService.instance.habits;
     final moods = MoodService.instance.getRecentMoods(_getDaysFromTimeframe(_selectedTimeframe));
-    final userProgress = AchievementService.instance.userProgress;
+    // final userProgress = AchievementService.instance.userProgress;
 
     return Scaffold(
       appBar: AppBar(
@@ -255,7 +255,7 @@ class _AdvancedChartsScreenState extends State<AdvancedChartsScreen> {
       margin: const EdgeInsets.only(bottom: 12),
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
-        color: colors.textColor.withOpacity(0.05),
+        color: colors.textColor.withValues(alpha: 0.05),
         borderRadius: BorderRadius.circular(12),
       ),
       child: Row(
@@ -277,7 +277,7 @@ class _AdvancedChartsScreenState extends State<AdvancedChartsScreen> {
                   'Current: $streak days | Longest: $longestStreak days',
                   style: TextStyle(
                     fontSize: 14,
-                    color: colors.textColor.withOpacity(0.7),
+                    color: colors.textColor.withValues(alpha: 0.7),
                   ),
                 ),
               ],
@@ -298,7 +298,7 @@ class _AdvancedChartsScreenState extends State<AdvancedChartsScreen> {
                 'completion',
                 style: TextStyle(
                   fontSize: 12,
-                  color: colors.textColor.withOpacity(0.6),
+                  color: colors.textColor.withValues(alpha: 0.6),
                 ),
               ),
             ],
@@ -341,9 +341,9 @@ class _AdvancedChartsScreenState extends State<AdvancedChartsScreen> {
       margin: const EdgeInsets.only(bottom: 12),
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
-        color: color.withOpacity(0.1),
+        color: color.withValues(alpha: 0.1),
         borderRadius: BorderRadius.circular(12),
-        border: Border.all(color: color.withOpacity(0.3)),
+        border: Border.all(color: color.withValues(alpha: 0.3)),
       ),
       child: Row(
         children: [
@@ -366,7 +366,7 @@ class _AdvancedChartsScreenState extends State<AdvancedChartsScreen> {
                   description,
                   style: TextStyle(
                     fontSize: 14,
-                    color: colors.textColor.withOpacity(0.7),
+                    color: colors.textColor.withValues(alpha: 0.7),
                   ),
                 ),
               ],
@@ -426,7 +426,7 @@ class _AdvancedChartsScreenState extends State<AdvancedChartsScreen> {
                 '$current/$target',
                 style: TextStyle(
                   fontSize: 14,
-                  color: colors.textColor.withOpacity(0.7),
+                  color: colors.textColor.withValues(alpha: 0.7),
                 ),
               ),
             ],
@@ -434,7 +434,7 @@ class _AdvancedChartsScreenState extends State<AdvancedChartsScreen> {
           const SizedBox(height: 8),
           LinearProgressIndicator(
             value: progress,
-            backgroundColor: colors.textColor.withOpacity(0.1),
+            backgroundColor: colors.textColor.withValues(alpha: 0.1),
             valueColor: AlwaysStoppedAnimation<Color>(
               Theme.of(context).colorScheme.primary,
             ),
@@ -450,7 +450,7 @@ class _AdvancedChartsScreenState extends State<AdvancedChartsScreen> {
       padding: const EdgeInsets.all(40),
       child: Column(
         children: [
-          Icon(icon, size: 48, color: colors.textColor.withOpacity(0.3)),
+          Icon(icon, size: 48, color: colors.textColor.withValues(alpha: 0.3)),
           const SizedBox(height: 16),
           Text(
             title,
@@ -465,7 +465,7 @@ class _AdvancedChartsScreenState extends State<AdvancedChartsScreen> {
             message,
             style: TextStyle(
               fontSize: 14,
-              color: colors.textColor.withOpacity(0.7),
+              color: colors.textColor.withValues(alpha: 0.7),
             ),
             textAlign: TextAlign.center,
           ),
@@ -478,7 +478,7 @@ class _AdvancedChartsScreenState extends State<AdvancedChartsScreen> {
     return Container(
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
-        color: colors.textColor.withOpacity(0.05),
+        color: colors.textColor.withValues(alpha: 0.05),
         borderRadius: BorderRadius.circular(12),
       ),
       child: Column(
@@ -497,7 +497,7 @@ class _AdvancedChartsScreenState extends State<AdvancedChartsScreen> {
             label,
             style: TextStyle(
               fontSize: 12,
-              color: colors.textColor.withOpacity(0.7),
+              color: colors.textColor.withValues(alpha: 0.7),
             ),
           ),
         ],

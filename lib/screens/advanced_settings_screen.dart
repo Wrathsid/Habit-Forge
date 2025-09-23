@@ -349,13 +349,13 @@ class _AdvancedSettingsScreenState extends State<AdvancedSettingsScreen> {
         subtitle,
         style: TextStyle(
           fontSize: 14,
-          color: colors.textColor.withOpacity(0.7),
+          color: colors.textColor.withValues(alpha: 0.7),
         ),
       ),
       trailing: Switch(
         value: value,
         onChanged: onChanged,
-        activeColor: Theme.of(context).colorScheme.primary,
+        activeThumbColor: Theme.of(context).colorScheme.primary,
       ),
     );
   }
@@ -414,7 +414,7 @@ class _AdvancedSettingsScreenState extends State<AdvancedSettingsScreen> {
             subtitle,
             style: TextStyle(
               fontSize: 14,
-              color: colors.textColor.withOpacity(0.7),
+              color: colors.textColor.withValues(alpha: 0.7),
             ),
           ),
           const SizedBox(height: 8),
@@ -465,7 +465,7 @@ class _AdvancedSettingsScreenState extends State<AdvancedSettingsScreen> {
         subtitle,
         style: TextStyle(
           fontSize: 14,
-          color: colors.textColor.withOpacity(0.7),
+          color: colors.textColor.withValues(alpha: 0.7),
         ),
       ),
       trailing: Icon(
@@ -479,7 +479,7 @@ class _AdvancedSettingsScreenState extends State<AdvancedSettingsScreen> {
 
   Widget _buildDivider(NeumorphicColors colors) {
     return Divider(
-      color: colors.textColor.withOpacity(0.1),
+      color: colors.textColor.withValues(alpha: 0.1),
       height: 1,
     );
   }

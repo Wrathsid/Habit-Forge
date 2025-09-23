@@ -70,7 +70,7 @@ class _NotificationManagementScreenState extends State<NotificationManagementScr
         bottom: TabBar(
           controller: _tabController,
           labelColor: colors.textColor,
-          unselectedLabelColor: colors.textColor.withOpacity(0.5),
+          unselectedLabelColor: colors.textColor.withValues(alpha: 0.5),
           indicatorColor: Theme.of(context).colorScheme.primary,
           tabs: const [
             Tab(text: 'Pending'),
@@ -361,7 +361,7 @@ class _NotificationManagementScreenState extends State<NotificationManagementScr
                         notification.body ?? 'No Body',
                         style: TextStyle(
                           fontSize: 14,
-                          color: colors.textColor.withOpacity(0.7),
+                          color: colors.textColor.withValues(alpha: 0.7),
                         ),
                       ),
                     ],
@@ -388,7 +388,7 @@ class _NotificationManagementScreenState extends State<NotificationManagementScr
               'ID: ${notification.id}',
               style: TextStyle(
                 fontSize: 12,
-                color: colors.textColor.withOpacity(0.5),
+                color: colors.textColor.withValues(alpha: 0.5),
               ),
             ),
           ],
@@ -407,7 +407,7 @@ class _NotificationManagementScreenState extends State<NotificationManagementScr
             Container(
               padding: const EdgeInsets.all(12),
               decoration: BoxDecoration(
-                color: Theme.of(context).colorScheme.primary.withOpacity(0.1),
+                color: Theme.of(context).colorScheme.primary.withValues(alpha: 0.1),
                 borderRadius: BorderRadius.circular(12),
               ),
               child: Icon(icon, color: Theme.of(context).colorScheme.primary, size: 24),
@@ -465,7 +465,7 @@ class _NotificationManagementScreenState extends State<NotificationManagementScr
                     description,
                     style: TextStyle(
                       fontSize: 14,
-                      color: colors.textColor.withOpacity(0.7),
+                      color: colors.textColor.withValues(alpha: 0.7),
                     ),
                   ),
                 ],
@@ -474,7 +474,7 @@ class _NotificationManagementScreenState extends State<NotificationManagementScr
             Switch(
               value: value,
               onChanged: onChanged,
-              activeColor: Theme.of(context).colorScheme.primary,
+              activeThumbColor: Theme.of(context).colorScheme.primary,
             ),
           ],
         ),
@@ -495,7 +495,7 @@ class _NotificationManagementScreenState extends State<NotificationManagementScr
               Container(
                 padding: const EdgeInsets.all(12),
                 decoration: BoxDecoration(
-                  color: Theme.of(context).colorScheme.primary.withOpacity(0.1),
+                  color: Theme.of(context).colorScheme.primary.withValues(alpha: 0.1),
                   borderRadius: BorderRadius.circular(12),
                 ),
                 child: Icon(icon, color: Theme.of(context).colorScheme.primary, size: 24),
@@ -517,7 +517,7 @@ class _NotificationManagementScreenState extends State<NotificationManagementScr
                       description,
                       style: TextStyle(
                         fontSize: 14,
-                        color: colors.textColor.withOpacity(0.7),
+                        color: colors.textColor.withValues(alpha: 0.7),
                       ),
                     ),
                   ],
@@ -525,7 +525,7 @@ class _NotificationManagementScreenState extends State<NotificationManagementScr
               ),
               Icon(
                 LucideIcons.chevronRight,
-                color: colors.textColor.withOpacity(0.5),
+                color: colors.textColor.withValues(alpha: 0.5),
               ),
             ],
           ),
@@ -542,7 +542,7 @@ class _NotificationManagementScreenState extends State<NotificationManagementScr
           Icon(
             icon,
             size: 64,
-            color: colors.textColor.withOpacity(0.3),
+            color: colors.textColor.withValues(alpha: 0.3),
           ),
           const SizedBox(height: 16),
           Text(
@@ -558,7 +558,7 @@ class _NotificationManagementScreenState extends State<NotificationManagementScr
             message,
             style: TextStyle(
               fontSize: 14,
-              color: colors.textColor.withOpacity(0.7),
+              color: colors.textColor.withValues(alpha: 0.7),
             ),
             textAlign: TextAlign.center,
           ),
@@ -586,16 +586,20 @@ class _NotificationManagementScreenState extends State<NotificationManagementScr
   void _clearAllNotifications() async {
     await SmartNotificationService.instance.cancelAllNotifications();
     _loadData();
-    ScaffoldMessenger.of(context).showSnackBar(
-      const SnackBar(content: Text('All notifications cleared')),
-    );
+    if (mounted) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('All notifications cleared')),
+      );
+    }
   }
 
   void _updateSetting(String setting, bool value) {
     // Implement setting updates
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(content: Text('$setting updated to $value')),
-    );
+    if (mounted) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('$setting updated to $value')),
+      );
+    }
   }
 
   void _testSmartReminder() async {
@@ -605,9 +609,11 @@ class _NotificationManagementScreenState extends State<NotificationManagementScr
         habit: habits.first,
         recentMoods: [],
       );
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Test smart reminder scheduled')),
-      );
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text('Test smart reminder scheduled')),
+        );
+      }
     }
   }
 
@@ -617,9 +623,11 @@ class _NotificationManagementScreenState extends State<NotificationManagementScr
       body: 'You\'ve completed 7 days in a row!',
       achievementType: 'streak',
     );
-    ScaffoldMessenger.of(context).showSnackBar(
-      const SnackBar(content: Text('Test celebration notification sent')),
-    );
+    if (mounted) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('Test celebration notification sent')),
+      );
+    }
   }
 
   void _testWeatherNotification() async {
@@ -630,9 +638,11 @@ class _NotificationManagementScreenState extends State<NotificationManagementScr
         weatherCondition: 'sunny',
         temperature: 25.0,
       );
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Test weather notification sent')),
-      );
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text('Test weather notification sent')),
+        );
+      }
     }
   }
 
@@ -642,9 +652,11 @@ class _NotificationManagementScreenState extends State<NotificationManagementScr
       body: 'Your friend just completed their morning workout!',
       scheduledTime: DateTime.now().add(const Duration(seconds: 2)),
     );
-    ScaffoldMessenger.of(context).showSnackBar(
-      const SnackBar(content: Text('Test social notification sent')),
-    );
+    if (mounted) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('Test social notification sent')),
+      );
+    }
   }
 
   void _testBatchNotifications() async {
@@ -672,8 +684,10 @@ class _NotificationManagementScreenState extends State<NotificationManagementScr
     await SmartNotificationService.instance.scheduleBatchNotifications(
       notifications: notifications,
     );
-    ScaffoldMessenger.of(context).showSnackBar(
-      const SnackBar(content: Text('Batch test notifications sent')),
-    );
+    if (mounted) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('Batch test notifications sent')),
+      );
+    }
   }
 }

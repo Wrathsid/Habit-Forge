@@ -60,11 +60,16 @@ class _HabitCardState extends State<HabitCard> {
           
           // Show celebration if streak milestone
           if (widget.habit.currentStreak > 0 && widget.habit.currentStreak % 7 == 0) {
-            CelebrationAnimations.showStreakCelebration(
-              context: context,
-              streak: widget.habit.currentStreak,
-              habitName: widget.habit.name,
-            );
+            // Use a post-frame callback to ensure context is valid
+            WidgetsBinding.instance.addPostFrameCallback((_) {
+              if (mounted) {
+                CelebrationAnimations.showStreakCelebration(
+                  context: context,
+                  streak: widget.habit.currentStreak,
+                  habitName: widget.habit.name,
+                );
+              }
+            });
           }
         }
 
@@ -171,14 +176,14 @@ class _HabitCardState extends State<HabitCard> {
               '${widget.habit.currentStreak}/${widget.habit.goal}',
               style: TextStyle(
                 fontSize: 12,
-                color: colors.textColor.withOpacity(0.7),
+                color: colors.textColor.withValues(alpha: 0.7),
               ),
             ),
             Text(
               '${(widget.habit.progressPercentage * 100).round()}%',
               style: TextStyle(
                 fontSize: 12,
-                color: colors.textColor.withOpacity(0.7),
+                color: colors.textColor.withValues(alpha: 0.7),
               ),
             ),
           ],
@@ -218,21 +223,21 @@ class _HabitCardState extends State<HabitCard> {
           '${widget.habit.currentStreak} day streak',
           style: TextStyle(
             fontSize: 12,
-            color: colors.textColor.withOpacity(0.7),
+            color: colors.textColor.withValues(alpha: 0.7),
           ),
         ),
         const SizedBox(width: 16),
         Icon(
           LucideIcons.calendar,
           size: 14,
-          color: colors.textColor.withOpacity(0.7),
+          color: colors.textColor.withValues(alpha: 0.7),
         ),
         const SizedBox(width: 4),
         Text(
           '${widget.habit.completedDates.length} total',
           style: TextStyle(
             fontSize: 12,
-            color: colors.textColor.withOpacity(0.7),
+            color: colors.textColor.withValues(alpha: 0.7),
           ),
         ),
       ],

@@ -19,6 +19,18 @@ async def get_habit_insights(
     supabase: SupabaseClient = Depends(lambda: SupabaseClient())
 ):
     """Get habit insights and analytics for a user"""
+    if not user_id or not user_id.strip():
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail="User ID is required"
+        )
+    
+    if days < 1 or days > 365:
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail="Days must be between 1 and 365"
+        )
+    
     try:
         analytics_data = await supabase.get_habit_analytics(user_id)
         
@@ -49,6 +61,18 @@ async def get_mood_analysis(
     supabase: SupabaseClient = Depends(lambda: SupabaseClient())
 ):
     """Get mood analysis for a user"""
+    if not user_id or not user_id.strip():
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail="User ID is required"
+        )
+    
+    if days < 1 or days > 365:
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail="Days must be between 1 and 365"
+        )
+    
     try:
         mood_checkins = await supabase.get_mood_checkins(user_id)
         
@@ -104,6 +128,12 @@ async def get_habit_correlations(
     supabase: SupabaseClient = Depends(lambda: SupabaseClient())
 ):
     """Get habit correlations and patterns"""
+    if not user_id or not user_id.strip():
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail="User ID is required"
+        )
+    
     try:
         analytics_data = await supabase.get_habit_analytics(user_id)
         

@@ -44,10 +44,17 @@ async def lifespan(app: FastAPI):
     # Startup
     logger.info("Starting Habit Tracker API...")
     
-    # Initialize Supabase client
-    supabase_client = SupabaseClient()
-    await supabase_client.initialize()
-    app.state.supabase = supabase_client
+    try:
+        # Initialize Supabase client
+        supabase_client = SupabaseClient()
+        await supabase_client.initialize()
+        app.state.supabase = supabase_client
+        logger.info("Supabase client initialized successfully")
+    except Exception as e:
+        logger.error(f"Failed to initialize Supabase client: {str(e)}")
+        logger.warning("API will continue without database connection")
+        supabase_client = None
+        app.state.supabase = None
     
     logger.info("API startup complete")
     
@@ -55,8 +62,13 @@ async def lifespan(app: FastAPI):
     
     # Shutdown
     logger.info("Shutting down Habit Tracker API...")
-    if supabase_client:
-        await supabase_client.close()
+    try:
+        if supabase_client:
+            await supabase_client.close()
+            logger.info("Supabase client closed successfully")
+    except Exception as e:
+        logger.error(f"Error closing Supabase client: {str(e)}")
+    
     logger.info("API shutdown complete")
 
 # Create FastAPI app
@@ -127,29 +139,64 @@ app.include_router(
 @app.get("/")
 async def root():
     """Root endpoint"""
-    return {
-        "message": "Habit Tracker API",
-        "version": "1.0.0",
-        "status": "running"
-    }
+    try:
+        return {
+            "message": "Habit Tracker API",
+            "version": "1.0.0",
+            "status": "running",
+            "timestamp": "2024-01-01T00:00:00Z"
+        }
+    except Exception as e:
+        logger.error(f"Error in root endpoint: {str(e)}")
+        return {
+            "message": "Habit Tracker API",
+            "version": "1.0.0",
+            "status": "error",
+            "error": str(e)
+        }
 
 @app.get("/docs")
 async def get_docs():
     """API documentation endpoint"""
-    return {"docs_url": "/docs", "redoc_url": "/redoc"}
+    try:
+        return {
+            "docs_url": "/docs", 
+            "redoc_url": "/redoc",
+            "openapi_url": "/openapi.json"
+        }
+    except Exception as e:
+        logger.error(f"Error in docs endpoint: {str(e)}")
+        return {
+            "error": "Failed to get documentation",
+            "docs_url": "/docs", 
+            "redoc_url": "/redoc"
+        }
 
 if __name__ == "__main__":
-    # Get configuration from environment
-    host = os.getenv("HOST", "0.0.0.0")
-    port = int(os.getenv("PORT", 8000))
-    reload = os.getenv("RELOAD", "true").lower() == "true"
-    
-    logger.info(f"Starting server on {host}:{port}")
-    
-    uvicorn.run(
-        "main:app",
-        host=host,
-        port=port,
-        reload=reload,
-        log_level="info"
-    )
+    try:
+        # Get configuration from environment
+        host = os.getenv("HOST", "0.0.0.0")
+        port_str = os.getenv("PORT", "8000")
+        reload = os.getenv("RELOAD", "true").lower() == "true"
+        
+        # Validate port
+        try:
+            port = int(port_str)
+            if port < 1 or port > 65535:
+                raise ValueError("Port must be between 1 and 65535")
+        except ValueError as e:
+            logger.error(f"Invalid port configuration: {e}")
+            port = 8000  # Default fallback
+        
+        logger.info(f"Starting server on {host}:{port}")
+        
+        uvicorn.run(
+            "main:app",
+            host=host,
+            port=port,
+            reload=reload,
+            log_level="info"
+        )
+    except Exception as e:
+        logger.error(f"Failed to start server: {str(e)}")
+        raise

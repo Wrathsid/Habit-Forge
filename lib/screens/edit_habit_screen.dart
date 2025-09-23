@@ -161,7 +161,7 @@ class _EditHabitScreenState extends State<EditHabitScreen> {
             decoration: InputDecoration(
               border: InputBorder.none,
               hintText: 'e.g., Morning Meditation',
-              hintStyle: TextStyle(color: colors.textColor.withOpacity(0.6)),
+              hintStyle: TextStyle(color: colors.textColor.withValues(alpha: 0.6)),
             ),
             validator: (value) {
               if (value == null || value.trim().isEmpty) {
@@ -197,7 +197,7 @@ class _EditHabitScreenState extends State<EditHabitScreen> {
             decoration: InputDecoration(
               border: InputBorder.none,
               hintText: 'Describe your habit...',
-              hintStyle: TextStyle(color: colors.textColor.withOpacity(0.6)),
+              hintStyle: TextStyle(color: colors.textColor.withValues(alpha: 0.6)),
             ),
           ),
         ),
@@ -227,7 +227,7 @@ class _EditHabitScreenState extends State<EditHabitScreen> {
             decoration: InputDecoration(
               border: InputBorder.none,
               hintText: '7',
-              hintStyle: TextStyle(color: colors.textColor.withOpacity(0.6)),
+              hintStyle: TextStyle(color: colors.textColor.withValues(alpha: 0.6)),
             ),
             validator: (value) {
               if (value == null || value.trim().isEmpty) {
@@ -360,7 +360,7 @@ class _EditHabitScreenState extends State<EditHabitScreen> {
                 'Show this habit in your daily list',
                 style: TextStyle(
                   fontSize: 12,
-                  color: colors.textColor.withOpacity(0.7),
+                  color: colors.textColor.withValues(alpha: 0.7),
                 ),
               ),
             ],
@@ -372,7 +372,7 @@ class _EditHabitScreenState extends State<EditHabitScreen> {
                 _isActive = value;
               });
             },
-            activeColor: Theme.of(context).colorScheme.primary,
+            activeThumbColor: Theme.of(context).colorScheme.primary,
           ),
         ],
       ),
@@ -424,7 +424,7 @@ class _EditHabitScreenState extends State<EditHabitScreen> {
           label,
           style: TextStyle(
             fontSize: 10,
-            color: colors.textColor.withOpacity(0.7),
+            color: colors.textColor.withValues(alpha: 0.7),
           ),
           textAlign: TextAlign.center,
         ),

@@ -409,7 +409,7 @@ class SmartNotificationService {
       case 'cloudy':
         return 'Cloudy day - perfect for focusing on ${habit.name.toLowerCase()}. ☁️';
       default:
-        return 'Weather update: ${temperature}°C. Time for ${habit.name.toLowerCase()}! 🌤️';
+        return 'Weather update: $temperature°C. Time for ${habit.name.toLowerCase()}! 🌤️';
     }
   }
 

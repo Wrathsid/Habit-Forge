@@ -367,7 +367,7 @@ class AchievementService {
   }
 
   int _calculateXPToNextLevel(int totalXP, int currentLevel) {
-    final currentLevelXP = (100 * math.sqrt(currentLevel * currentLevel * currentLevel)).round();
+    // final currentLevelXP = (100 * math.sqrt(currentLevel * currentLevel * currentLevel)).round();
     final nextLevelXP = (100 * math.sqrt((currentLevel + 1) * (currentLevel + 1) * (currentLevel + 1))).round();
     return nextLevelXP - totalXP;
   }

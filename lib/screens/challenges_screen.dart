@@ -53,7 +53,7 @@ class _ChallengesScreenState extends State<ChallengesScreen> with SingleTickerPr
         bottom: TabBar(
           controller: _tabController,
           labelColor: colors.textColor,
-          unselectedLabelColor: colors.textColor.withOpacity(0.5),
+          unselectedLabelColor: colors.textColor.withValues(alpha: 0.5),
           indicatorColor: Theme.of(context).colorScheme.primary,
           tabs: const [
             Tab(text: 'Active'),
@@ -160,7 +160,7 @@ class _ChallengesScreenState extends State<ChallengesScreen> with SingleTickerPr
                 Container(
                   padding: const EdgeInsets.all(8),
                   decoration: BoxDecoration(
-                    color: _getChallengeTypeColor(challenge.type).withOpacity(0.1),
+                    color: _getChallengeTypeColor(challenge.type).withValues(alpha: 0.1),
                     borderRadius: BorderRadius.circular(8),
                   ),
                   child: Icon(
@@ -186,7 +186,7 @@ class _ChallengesScreenState extends State<ChallengesScreen> with SingleTickerPr
                         'by ${challenge.creator.displayName}',
                         style: TextStyle(
                           fontSize: 14,
-                          color: colors.textColor.withOpacity(0.7),
+                          color: colors.textColor.withValues(alpha: 0.7),
                         ),
                       ),
                     ],
@@ -195,7 +195,7 @@ class _ChallengesScreenState extends State<ChallengesScreen> with SingleTickerPr
                 Container(
                   padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
                   decoration: BoxDecoration(
-                    color: _getStatusColor(challenge.status).withOpacity(0.1),
+                    color: _getStatusColor(challenge.status).withValues(alpha: 0.1),
                     borderRadius: BorderRadius.circular(12),
                   ),
                   child: Text(
@@ -216,7 +216,7 @@ class _ChallengesScreenState extends State<ChallengesScreen> with SingleTickerPr
               challenge.description,
               style: TextStyle(
                 fontSize: 14,
-                color: colors.textColor.withOpacity(0.8),
+                color: colors.textColor.withValues(alpha: 0.8),
               ),
             ),
             const SizedBox(height: 16),
@@ -258,7 +258,7 @@ class _ChallengesScreenState extends State<ChallengesScreen> with SingleTickerPr
             if (isParticipant) ...[
               LinearProgressIndicator(
                 value: stats['completionRate'],
-                backgroundColor: colors.textColor.withOpacity(0.1),
+                backgroundColor: colors.textColor.withValues(alpha: 0.1),
                 valueColor: AlwaysStoppedAnimation<Color>(
                   Theme.of(context).colorScheme.primary,
                 ),
@@ -306,7 +306,7 @@ class _ChallengesScreenState extends State<ChallengesScreen> with SingleTickerPr
     return Container(
       padding: const EdgeInsets.all(12),
       decoration: BoxDecoration(
-        color: colors.textColor.withOpacity(0.05),
+        color: colors.textColor.withValues(alpha: 0.05),
         borderRadius: BorderRadius.circular(8),
       ),
       child: Column(
@@ -325,7 +325,7 @@ class _ChallengesScreenState extends State<ChallengesScreen> with SingleTickerPr
             label,
             style: TextStyle(
               fontSize: 10,
-              color: colors.textColor.withOpacity(0.7),
+              color: colors.textColor.withValues(alpha: 0.7),
             ),
             textAlign: TextAlign.center,
           ),
@@ -342,7 +342,7 @@ class _ChallengesScreenState extends State<ChallengesScreen> with SingleTickerPr
           Icon(
             icon,
             size: 64,
-            color: colors.textColor.withOpacity(0.3),
+            color: colors.textColor.withValues(alpha: 0.3),
           ),
           const SizedBox(height: 16),
           Text(
@@ -358,7 +358,7 @@ class _ChallengesScreenState extends State<ChallengesScreen> with SingleTickerPr
             message,
             style: TextStyle(
               fontSize: 14,
-              color: colors.textColor.withOpacity(0.7),
+              color: colors.textColor.withValues(alpha: 0.7),
             ),
             textAlign: TextAlign.center,
           ),

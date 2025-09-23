@@ -1,5 +1,6 @@
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:timezone/timezone.dart' as tz;
+import 'package:flutter/foundation.dart';
 import 'package:timezone/data/latest.dart' as tz;
 
 class NotificationService {
@@ -11,24 +12,31 @@ class NotificationService {
   final FlutterLocalNotificationsPlugin _notifications = FlutterLocalNotificationsPlugin();
 
   Future<void> initialize() async {
-    tz.initializeTimeZones();
-    
-    const AndroidInitializationSettings initializationSettingsAndroid =
-        AndroidInitializationSettings('@mipmap/ic_launcher');
-    
-    const DarwinInitializationSettings initializationSettingsIOS =
-        DarwinInitializationSettings(
-          requestAlertPermission: true,
-          requestBadgePermission: true,
-          requestSoundPermission: true,
-        );
+    try {
+      tz.initializeTimeZones();
+      
+      const AndroidInitializationSettings initializationSettingsAndroid =
+          AndroidInitializationSettings('@mipmap/ic_launcher');
+      
+      const DarwinInitializationSettings initializationSettingsIOS =
+          DarwinInitializationSettings(
+            requestAlertPermission: true,
+            requestBadgePermission: true,
+            requestSoundPermission: true,
+          );
 
-    const InitializationSettings initializationSettings = InitializationSettings(
-      android: initializationSettingsAndroid,
-      iOS: initializationSettingsIOS,
-    );
+      const InitializationSettings initializationSettings = InitializationSettings(
+        android: initializationSettingsAndroid,
+        iOS: initializationSettingsIOS,
+      );
 
-    await _notifications.initialize(initializationSettings);
+      await _notifications.initialize(initializationSettings);
+    } catch (e) {
+      if (kDebugMode) {
+        print('Error initializing notification service: $e');
+      }
+      // Continue without notifications if initialization fails
+    }
   }
 
   Future<void> scheduleHabitReminder({
@@ -37,39 +45,64 @@ class NotificationService {
     required String body,
     required DateTime scheduledTime,
   }) async {
-    await _notifications.zonedSchedule(
-      id,
-      title,
-      body,
-      tz.TZDateTime.from(scheduledTime, tz.local),
-      const NotificationDetails(
-        android: AndroidNotificationDetails(
-          'habit_reminders',
-          'Habit Reminders',
-          channelDescription: 'Notifications for habit reminders',
-          importance: Importance.high,
-          priority: Priority.high,
+    try {
+      await _notifications.zonedSchedule(
+        id,
+        title,
+        body,
+        tz.TZDateTime.from(scheduledTime, tz.local),
+        const NotificationDetails(
+          android: AndroidNotificationDetails(
+            'habit_reminders',
+            'Habit Reminders',
+            channelDescription: 'Notifications for habit reminders',
+            importance: Importance.high,
+            priority: Priority.high,
+          ),
+          iOS: DarwinNotificationDetails(
+            presentAlert: true,
+            presentBadge: true,
+            presentSound: true,
+          ),
         ),
-        iOS: DarwinNotificationDetails(
-          presentAlert: true,
-          presentBadge: true,
-          presentSound: true,
-        ),
-      ),
-      androidScheduleMode: AndroidScheduleMode.exactAllowWhileIdle,
-      matchDateTimeComponents: DateTimeComponents.time,
-    );
+        androidScheduleMode: AndroidScheduleMode.exactAllowWhileIdle,
+        matchDateTimeComponents: DateTimeComponents.time,
+      );
+    } catch (e) {
+      if (kDebugMode) {
+        print('Error scheduling habit reminder: $e');
+      }
+    }
   }
 
   Future<void> cancelNotification(int id) async {
-    await _notifications.cancel(id);
+    try {
+      await _notifications.cancel(id);
+    } catch (e) {
+      if (kDebugMode) {
+        print('Error canceling notification: $e');
+      }
+    }
   }
 
   Future<void> cancelAllNotifications() async {
-    await _notifications.cancelAll();
+    try {
+      await _notifications.cancelAll();
+    } catch (e) {
+      if (kDebugMode) {
+        print('Error canceling all notifications: $e');
+      }
+    }
   }
 
   Future<List<PendingNotificationRequest>> getPendingNotifications() async {
-    return await _notifications.pendingNotificationRequests();
+    try {
+      return await _notifications.pendingNotificationRequests();
+    } catch (e) {
+      if (kDebugMode) {
+        print('Error getting pending notifications: $e');
+      }
+      return [];
+    }
   }
 }

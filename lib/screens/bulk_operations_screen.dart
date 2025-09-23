@@ -200,7 +200,7 @@ class _BulkOperationsScreenState extends State<BulkOperationsScreen> {
                 borderSide: BorderSide.none,
               ),
               filled: true,
-              fillColor: colors.shadowDark.withOpacity(0.1),
+              fillColor: colors.shadowDark.withValues(alpha: 0.1),
             ),
           ),
           
@@ -233,7 +233,7 @@ class _BulkOperationsScreenState extends State<BulkOperationsScreen> {
             children: [
               Expanded(
                 child: DropdownButtonFormField<String>(
-                  value: _sortBy,
+                  initialValue: _sortBy,
                   decoration: InputDecoration(
                     labelText: 'Sort by',
                     border: OutlineInputBorder(
@@ -405,14 +405,14 @@ class _BulkOperationsScreenState extends State<BulkOperationsScreen> {
             Icon(
               LucideIcons.search,
               size: 64,
-              color: colors.textColor.withOpacity(0.5),
+              color: colors.textColor.withValues(alpha: 0.5),
             ),
             const SizedBox(height: 16),
             Text(
               'No habits found',
               style: TextStyle(
                 fontSize: 18,
-                color: colors.textColor.withOpacity(0.7),
+                color: colors.textColor.withValues(alpha: 0.7),
               ),
             ),
           ],
@@ -451,7 +451,7 @@ class _BulkOperationsScreenState extends State<BulkOperationsScreen> {
                   Container(
                     padding: const EdgeInsets.all(8),
                     decoration: BoxDecoration(
-                      color: Theme.of(context).primaryColor.withOpacity(0.1),
+                      color: Theme.of(context).primaryColor.withValues(alpha: 0.1),
                       borderRadius: BorderRadius.circular(8),
                     ),
                     child: Icon(
@@ -480,7 +480,7 @@ class _BulkOperationsScreenState extends State<BulkOperationsScreen> {
                           habit.description,
                           style: TextStyle(
                             fontSize: 14,
-                            color: colors.textColor.withOpacity(0.7),
+                            color: colors.textColor.withValues(alpha: 0.7),
                           ),
                           maxLines: 2,
                           overflow: TextOverflow.ellipsis,
@@ -491,7 +491,7 @@ class _BulkOperationsScreenState extends State<BulkOperationsScreen> {
                             Container(
                               padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
                               decoration: BoxDecoration(
-                                color: Theme.of(context).primaryColor.withOpacity(0.1),
+                                color: Theme.of(context).primaryColor.withValues(alpha: 0.1),
                                 borderRadius: BorderRadius.circular(12),
                               ),
                               child: Text(
@@ -513,7 +513,7 @@ class _BulkOperationsScreenState extends State<BulkOperationsScreen> {
                               '${habit.currentStreak}',
                               style: TextStyle(
                                 fontSize: 12,
-                                color: colors.textColor.withOpacity(0.7),
+                                color: colors.textColor.withValues(alpha: 0.7),
                               ),
                             ),
                           ],
@@ -527,8 +527,8 @@ class _BulkOperationsScreenState extends State<BulkOperationsScreen> {
                     padding: const EdgeInsets.all(8),
                     decoration: BoxDecoration(
                       color: HabitService.instance.isCompletedToday(habit.id)
-                          ? Colors.green.withOpacity(0.1)
-                          : Colors.grey.withOpacity(0.1),
+                          ? Colors.green.withValues(alpha: 0.1)
+                          : Colors.grey.withValues(alpha: 0.1),
                       borderRadius: BorderRadius.circular(8),
                     ),
                     child: Icon(
@@ -616,11 +616,19 @@ class _BulkOperationsScreenState extends State<BulkOperationsScreen> {
   }
 
   void _bulkEdit() {
-    // TODO: Implement bulk edit functionality
+    if (_selectedHabits.isEmpty) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text('Please select habits to edit'),
+        ),
+      );
+      return;
+    }
+    
     HapticService.instance.medium();
     ScaffoldMessenger.of(context).showSnackBar(
-      const SnackBar(
-        content: Text('Bulk edit feature coming soon!'),
+      SnackBar(
+        content: Text('Bulk edit for ${_selectedHabits.length} habits - Feature in development'),
       ),
     );
   }

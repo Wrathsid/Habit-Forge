@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:uuid/uuid.dart';
+import 'package:flutter/foundation.dart';
 
 class Habit {
   final String id;
@@ -110,27 +111,54 @@ class Habit {
   factory Habit.fromJson(Map<String, dynamic> json) {
     TimeOfDay? reminderTime;
     if (json['reminderTime'] != null) {
-      final timeParts = json['reminderTime'].split(':');
-      reminderTime = TimeOfDay(
-        hour: int.parse(timeParts[0]),
-        minute: int.parse(timeParts[1]),
-      );
+      try {
+        final timeParts = json['reminderTime'].split(':');
+        reminderTime = TimeOfDay(
+          hour: int.parse(timeParts[0]),
+          minute: int.parse(timeParts[1]),
+        );
+        } catch (e) {
+          if (kDebugMode) {
+            print('Error parsing reminder time: $e');
+          }
+          reminderTime = null;
+        }
+    }
+
+    List<DateTime> completedDates = [];
+    try {
+      completedDates = (json['completedDates'] as List?)
+          ?.map((e) => DateTime.parse(e))
+          .toList() ?? [];
+    } catch (e) {
+      if (kDebugMode) {
+        print('Error parsing completed dates: $e');
+      }
+      completedDates = [];
+    }
+
+    DateTime createdAt;
+    try {
+      createdAt = DateTime.parse(json['createdAt']);
+    } catch (e) {
+      if (kDebugMode) {
+        print('Error parsing created date: $e');
+      }
+      createdAt = DateTime.now();
     }
 
     return Habit(
-      id: json['id'],
-      name: json['name'],
-      description: json['description'],
-      icon: json['icon'],
+      id: json['id'] ?? '',
+      name: json['name'] ?? '',
+      description: json['description'] ?? '',
+      icon: json['icon'] ?? '📝',
       category: json['category'] ?? 'Personal',
       currentStreak: json['currentStreak'] ?? 0,
       longestStreak: json['longestStreak'] ?? 0,
       goal: json['goal'] ?? 7,
       priority: json['priority'] ?? 1,
-      completedDates: (json['completedDates'] as List?)
-          ?.map((e) => DateTime.parse(e))
-          .toList() ?? [],
-      createdAt: DateTime.parse(json['createdAt']),
+      completedDates: completedDates,
+      createdAt: createdAt,
       isActive: json['isActive'] ?? true,
       hasReminder: json['hasReminder'] ?? false,
       reminderTime: reminderTime,

@@ -15,7 +15,7 @@ class MoodTrackingScreen extends StatefulWidget {
 class _MoodTrackingScreenState extends State<MoodTrackingScreen> {
   MoodType? _selectedMood;
   final TextEditingController _noteController = TextEditingController();
-  List<String> _selectedTags = [];
+  final List<String> _selectedTags = [];
   final List<String> _availableTags = [
     'Happy', 'Stressed', 'Energetic', 'Tired', 'Motivated',
     'Anxious', 'Calm', 'Excited', 'Focused', 'Relaxed',
@@ -115,7 +115,7 @@ class _MoodTrackingScreenState extends State<MoodTrackingScreen> {
                           todayMood.note!,
                           style: TextStyle(
                             fontSize: 14,
-                            color: colors.textColor.withOpacity(0.7),
+                            color: colors.textColor.withValues(alpha: 0.7),
                           ),
                         ),
                       ],
@@ -132,7 +132,7 @@ class _MoodTrackingScreenState extends State<MoodTrackingScreen> {
                 children: todayMood.tags.map((tag) => Container(
                   padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
                   decoration: BoxDecoration(
-                    color: todayMood.color.withOpacity(0.1),
+                    color: todayMood.color.withValues(alpha: 0.1),
                     borderRadius: BorderRadius.circular(16),
                   ),
                   child: Text(
@@ -151,7 +151,7 @@ class _MoodTrackingScreenState extends State<MoodTrackingScreen> {
               'No mood recorded today',
               style: TextStyle(
                 fontSize: 16,
-                color: colors.textColor.withOpacity(0.7),
+                color: colors.textColor.withValues(alpha: 0.7),
               ),
             ),
           ],
@@ -185,8 +185,8 @@ class _MoodTrackingScreenState extends State<MoodTrackingScreen> {
                   padding: const EdgeInsets.all(16),
                   decoration: BoxDecoration(
                     color: isSelected 
-                        ? _getMoodColor(mood).withOpacity(0.1)
-                        : colors.textColor.withOpacity(0.05),
+                        ? _getMoodColor(mood).withValues(alpha: 0.1)
+                        : colors.textColor.withValues(alpha: 0.05),
                     shape: BoxShape.circle,
                     border: isSelected 
                         ? Border.all(color: _getMoodColor(mood), width: 2)
@@ -238,13 +238,13 @@ class _MoodTrackingScreenState extends State<MoodTrackingScreen> {
             maxLines: 3,
             decoration: InputDecoration(
               hintText: 'What\'s on your mind?',
-              hintStyle: TextStyle(color: colors.textColor.withOpacity(0.5)),
+              hintStyle: TextStyle(color: colors.textColor.withValues(alpha: 0.5)),
               border: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(12),
                 borderSide: BorderSide.none,
               ),
               filled: true,
-              fillColor: colors.textColor.withOpacity(0.05),
+              fillColor: colors.textColor.withValues(alpha: 0.05),
             ),
             style: TextStyle(color: colors.textColor),
           ),
@@ -287,8 +287,8 @@ class _MoodTrackingScreenState extends State<MoodTrackingScreen> {
                   padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
                   decoration: BoxDecoration(
                     color: isSelected 
-                        ? Theme.of(context).colorScheme.primary.withOpacity(0.1)
-                        : colors.textColor.withOpacity(0.05),
+                        ? Theme.of(context).colorScheme.primary.withValues(alpha: 0.1)
+                        : colors.textColor.withValues(alpha: 0.05),
                     borderRadius: BorderRadius.circular(16),
                     border: isSelected 
                         ? Border.all(color: Theme.of(context).colorScheme.primary)
@@ -404,7 +404,7 @@ class _MoodTrackingScreenState extends State<MoodTrackingScreen> {
     return Container(
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
-        color: colors.textColor.withOpacity(0.05),
+        color: colors.textColor.withValues(alpha: 0.05),
         borderRadius: BorderRadius.circular(12),
       ),
       child: Column(
@@ -423,7 +423,7 @@ class _MoodTrackingScreenState extends State<MoodTrackingScreen> {
             label,
             style: TextStyle(
               fontSize: 12,
-              color: colors.textColor.withOpacity(0.7),
+              color: colors.textColor.withValues(alpha: 0.7),
             ),
             textAlign: TextAlign.center,
           ),
@@ -447,9 +447,11 @@ class _MoodTrackingScreenState extends State<MoodTrackingScreen> {
       _selectedTags.clear();
     });
 
-    ScaffoldMessenger.of(context).showSnackBar(
-      const SnackBar(content: Text('Mood saved successfully!')),
-    );
+    if (mounted) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('Mood saved successfully!')),
+      );
+    }
   }
 
   String _getMoodEmoji(MoodType mood) {

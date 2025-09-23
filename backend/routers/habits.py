@@ -58,6 +58,12 @@ async def get_habits(
     supabase: SupabaseClient = Depends(lambda: SupabaseClient())
 ):
     """Get all habits for a user"""
+    if not user_id or not user_id.strip():
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail="User ID is required"
+        )
+    
     try:
         habits = await supabase.get_habits(user_id)
         return habits
@@ -75,6 +81,18 @@ async def create_habit(
     supabase: SupabaseClient = Depends(lambda: SupabaseClient())
 ):
     """Create a new habit"""
+    if not user_id or not user_id.strip():
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail="User ID is required"
+        )
+    
+    if not habit.name or not habit.name.strip():
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail="Habit name is required"
+        )
+    
     try:
         habit_data = habit.dict()
         habit_data['user_id'] = user_id
@@ -96,6 +114,18 @@ async def get_habit(
     supabase: SupabaseClient = Depends(lambda: SupabaseClient())
 ):
     """Get a specific habit"""
+    if not user_id or not user_id.strip():
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail="User ID is required"
+        )
+    
+    if not habit_id or not habit_id.strip():
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail="Habit ID is required"
+        )
+    
     try:
         habits = await supabase.get_habits(user_id)
         habit = next((h for h in habits if h['id'] == habit_id), None)
@@ -124,12 +154,32 @@ async def update_habit(
     supabase: SupabaseClient = Depends(lambda: SupabaseClient())
 ):
     """Update a habit"""
+    if not user_id or not user_id.strip():
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail="User ID is required"
+        )
+    
+    if not habit_id or not habit_id.strip():
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail="Habit ID is required"
+        )
+    
     try:
         updates = habit_update.dict(exclude_unset=True)
+        if not updates:
+            raise HTTPException(
+                status_code=status.HTTP_400_BAD_REQUEST,
+                detail="No updates provided"
+            )
+        
         updates['updated_at'] = datetime.now().isoformat()
         
         updated_habit = await supabase.update_habit(habit_id, updates)
         return updated_habit
+    except HTTPException:
+        raise
     except Exception as e:
         logger.error(f"Error updating habit: {str(e)}")
         raise HTTPException(
@@ -144,6 +194,18 @@ async def delete_habit(
     supabase: SupabaseClient = Depends(lambda: SupabaseClient())
 ):
     """Delete a habit"""
+    if not user_id or not user_id.strip():
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail="User ID is required"
+        )
+    
+    if not habit_id or not habit_id.strip():
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail="Habit ID is required"
+        )
+    
     try:
         await supabase.delete_habit(habit_id)
         return {"message": "Habit deleted successfully"}
@@ -161,6 +223,24 @@ async def mark_habit_complete(
     supabase: SupabaseClient = Depends(lambda: SupabaseClient())
 ):
     """Mark a habit as complete"""
+    if not user_id or not user_id.strip():
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail="User ID is required"
+        )
+    
+    if not completion.habit_id or not completion.habit_id.strip():
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail="Habit ID is required"
+        )
+    
+    if not completion.completion_date or not completion.completion_date.strip():
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail="Completion date is required"
+        )
+    
     try:
         completion_data = completion.dict()
         completion_data['user_id'] = user_id

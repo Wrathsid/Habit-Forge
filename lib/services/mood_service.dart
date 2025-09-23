@@ -70,16 +70,17 @@ class MoodService {
 
   Mood? getMoodForDate(DateTime date) {
     final dateOnly = DateTime(date.year, date.month, date.day);
-      try {
-        return _moods.firstWhere(
-          (mood) {
-            final moodDate = DateTime(mood.date.year, mood.date.month, mood.date.day);
-            return moodDate.isAtSameMomentAs(dateOnly);
-          },
-        );
-      } catch (e) {
-        return null;
-      }
+    try {
+      return _moods.firstWhere(
+        (mood) {
+          final moodDate = DateTime(mood.date.year, mood.date.month, mood.date.day);
+          return moodDate.isAtSameMomentAs(dateOnly);
+        },
+        orElse: () => throw Exception('Mood not found for date'),
+      );
+    } catch (e) {
+      return null;
+    }
   }
 
   Mood? getTodayMood() {

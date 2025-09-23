@@ -22,10 +22,18 @@ async def health_check():
 @router.get("/ready")
 async def readiness_check():
     """Readiness check endpoint"""
-    return {
-        "status": "ready",
-        "timestamp": datetime.now().isoformat()
-    }
+    try:
+        return {
+            "status": "ready",
+            "timestamp": datetime.now().isoformat()
+        }
+    except Exception as e:
+        logger.error(f"Error in readiness check: {str(e)}")
+        return {
+            "status": "not_ready",
+            "timestamp": datetime.now().isoformat(),
+            "error": str(e)
+        }
 
 @router.get("/live")
 async def liveness_check():

@@ -1,4 +1,5 @@
 import 'package:supabase_flutter/supabase_flutter.dart';
+import 'package:flutter/foundation.dart';
 import '../config/env_config.dart';
 
 class SupabaseService {
@@ -53,6 +54,10 @@ class SupabaseService {
 
   // Database Operations
   Future<List<Map<String, dynamic>>> getHabits() async {
+    if (currentUser == null) {
+      throw Exception('User not authenticated');
+    }
+    
     final response = await client
         .from('habits')
         .select()
@@ -63,20 +68,28 @@ class SupabaseService {
   }
 
   Future<Map<String, dynamic>> createHabit(Map<String, dynamic> habit) async {
+    if (currentUser == null) {
+      throw Exception('User not authenticated');
+    }
+    
     final response = await client
         .from('habits')
         .insert({
           ...habit,
-          'user_id': currentUser?.id,
+          'user_id': currentUser!.id,
           'created_at': DateTime.now().toIso8601String(),
         })
         .select()
-        .single();
+        .maybeSingle();
     
     return response;
   }
 
   Future<Map<String, dynamic>> updateHabit(String id, Map<String, dynamic> updates) async {
+    if (currentUser == null) {
+      throw Exception('User not authenticated');
+    }
+    
     final response = await client
         .from('habits')
         .update({
@@ -86,12 +99,16 @@ class SupabaseService {
         .eq('id', id)
         .eq('user_id', currentUser!.id)
         .select()
-        .single();
+        .maybeSingle();
     
     return response;
   }
 
   Future<void> deleteHabit(String id) async {
+    if (currentUser == null) {
+      throw Exception('User not authenticated');
+    }
+    
     await client
         .from('habits')
         .delete()
@@ -101,21 +118,29 @@ class SupabaseService {
 
   // Habit Completions
   Future<Map<String, dynamic>> markHabitComplete(String habitId, DateTime date) async {
+    if (currentUser == null) {
+      throw Exception('User not authenticated');
+    }
+    
     final response = await client
         .from('habit_completions')
         .upsert({
           'habit_id': habitId,
-          'user_id': currentUser?.id,
+          'user_id': currentUser!.id,
           'completed_at': date.toIso8601String(),
           'date': date.toIso8601String().split('T')[0], // YYYY-MM-DD format
         })
         .select()
-        .single();
+        .maybeSingle();
     
     return response;
   }
 
   Future<List<Map<String, dynamic>>> getHabitCompletions(String habitId) async {
+    if (currentUser == null) {
+      throw Exception('User not authenticated');
+    }
+    
     final response = await client
         .from('habit_completions')
         .select()
@@ -128,20 +153,28 @@ class SupabaseService {
 
   // Mood Tracking
   Future<Map<String, dynamic>> saveMood(Map<String, dynamic> mood) async {
+    if (currentUser == null) {
+      throw Exception('User not authenticated');
+    }
+    
     final response = await client
         .from('moods')
         .upsert({
           ...mood,
-          'user_id': currentUser?.id,
+          'user_id': currentUser!.id,
           'created_at': DateTime.now().toIso8601String(),
         })
         .select()
-        .single();
+        .maybeSingle();
     
     return response;
   }
 
   Future<List<Map<String, dynamic>>> getMoods() async {
+    if (currentUser == null) {
+      throw Exception('User not authenticated');
+    }
+    
     final response = await client
         .from('moods')
         .select()
@@ -153,20 +186,28 @@ class SupabaseService {
 
   // Achievements
   Future<Map<String, dynamic>> saveAchievement(Map<String, dynamic> achievement) async {
+    if (currentUser == null) {
+      throw Exception('User not authenticated');
+    }
+    
     final response = await client
         .from('achievements')
         .insert({
           ...achievement,
-          'user_id': currentUser?.id,
+          'user_id': currentUser!.id,
           'earned_at': DateTime.now().toIso8601String(),
         })
         .select()
-        .single();
+        .maybeSingle();
     
     return response;
   }
 
   Future<List<Map<String, dynamic>>> getAchievements() async {
+    if (currentUser == null) {
+      throw Exception('User not authenticated');
+    }
+    
     final response = await client
         .from('achievements')
         .select()
@@ -178,20 +219,28 @@ class SupabaseService {
 
   // User Progress
   Future<Map<String, dynamic>> updateUserProgress(Map<String, dynamic> progress) async {
+    if (currentUser == null) {
+      throw Exception('User not authenticated');
+    }
+    
     final response = await client
         .from('user_progress')
         .upsert({
           ...progress,
-          'user_id': currentUser?.id,
+          'user_id': currentUser!.id,
           'updated_at': DateTime.now().toIso8601String(),
         })
         .select()
-        .single();
+        .maybeSingle();
     
     return response;
   }
 
   Future<Map<String, dynamic>?> getUserProgress() async {
+    if (currentUser == null) {
+      throw Exception('User not authenticated');
+    }
+    
     final response = await client
         .from('user_progress')
         .select()
@@ -203,6 +252,10 @@ class SupabaseService {
 
   // Social Features
   Future<List<Map<String, dynamic>>> getFriends() async {
+    if (currentUser == null) {
+      throw Exception('User not authenticated');
+    }
+    
     final response = await client
         .from('friends')
         .select('*, profiles(*)')
@@ -213,16 +266,20 @@ class SupabaseService {
   }
 
   Future<Map<String, dynamic>> sendFriendRequest(String friendId) async {
+    if (currentUser == null) {
+      throw Exception('User not authenticated');
+    }
+    
     final response = await client
         .from('friends')
         .insert({
-          'user_id': currentUser?.id,
+          'user_id': currentUser!.id,
           'friend_id': friendId,
           'status': 'pending',
           'created_at': DateTime.now().toIso8601String(),
         })
         .select()
-        .single();
+        .maybeSingle();
     
     return response;
   }
@@ -242,7 +299,9 @@ class SupabaseService {
           ),
           callback: (payload) {
             // Handle real-time updates
-            print('Habit updated: ${payload.newRecord}');
+            if (kDebugMode) {
+              print('Habit updated: ${payload.newRecord}');
+            }
           },
         )
         .subscribe();

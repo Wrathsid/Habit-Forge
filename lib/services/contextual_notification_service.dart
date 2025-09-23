@@ -1,6 +1,6 @@
 import 'dart:math';
-import 'package:flutter_local_notifications/flutter_local_notifications.dart';
-import 'package:timezone/timezone.dart' as tz;
+// import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+// import 'package:timezone/timezone.dart' as tz;
 import '../models/habit.dart';
 import '../models/mood.dart';
 import '../services/smart_notification_service.dart';
@@ -62,7 +62,7 @@ class ContextualNotificationService {
     if (recentMoods.isEmpty) return;
     
     final latestMood = recentMoods.last;
-    final averageMood = recentMoods.fold<double>(0, (sum, mood) => sum + mood.numericValue) / recentMoods.length;
+    // final averageMood = recentMoods.fold<double>(0, (sum, mood) => sum + mood.numericValue) / recentMoods.length;
     
     // Low mood motivation
     if (latestMood.numericValue < 2.5 && !_hasRecentContextNotification(habit.id, 'low_mood')) {

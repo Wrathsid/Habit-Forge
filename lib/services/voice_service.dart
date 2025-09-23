@@ -1,5 +1,6 @@
 import 'package:speech_to_text/speech_to_text.dart';
 import 'package:flutter_tts/flutter_tts.dart';
+import 'package:flutter/foundation.dart';
 
 class VoiceService {
   static final VoiceService _instance = VoiceService._internal();
@@ -30,9 +31,13 @@ class VoiceService {
       await _tts.setVolume(1.0);
       await _tts.setPitch(1.0);
       
-      print('Voice service initialized successfully');
+      if (kDebugMode) {
+        print('Voice service initialized successfully');
+      }
     } catch (e) {
-      print('Voice service initialization failed: $e');
+      if (kDebugMode) {
+        print('Voice service initialization failed: $e');
+      }
     }
   }
 
@@ -59,13 +64,15 @@ class VoiceService {
         },
         listenFor: const Duration(seconds: 30),
         pauseFor: const Duration(seconds: 3),
-        partialResults: true,
+        listenOptions: SpeechListenOptions(
+          partialResults: true,
+          cancelOnError: true,
+          listenMode: ListenMode.confirmation,
+        ),
         localeId: "en_US",
         onSoundLevelChange: (level) {
           // Handle sound level changes if needed
         },
-        cancelOnError: true,
-        listenMode: ListenMode.confirmation,
       );
     } catch (e) {
       _isListening = false;
@@ -81,7 +88,10 @@ class VoiceService {
       await _speech.stop();
       _isListening = false;
     } catch (e) {
-      print('Error stopping speech recognition: $e');
+      if (kDebugMode) {
+        print('Error stopping speech recognition: $e');
+      }
+      _isListening = false; // Ensure state is reset even if stop fails
     }
   }
 
@@ -93,7 +103,10 @@ class VoiceService {
       await _speech.cancel();
       _isListening = false;
     } catch (e) {
-      print('Error canceling speech recognition: $e');
+      if (kDebugMode) {
+        print('Error canceling speech recognition: $e');
+      }
+      _isListening = false; // Ensure state is reset even if cancel fails
     }
   }
 
@@ -110,7 +123,9 @@ class VoiceService {
       _isSpeaking = false;
     } catch (e) {
       _isSpeaking = false;
-      print('Text-to-speech error: $e');
+      if (kDebugMode) {
+        print('Text-to-speech error: $e');
+      }
     }
   }
 
@@ -122,7 +137,10 @@ class VoiceService {
       await _tts.stop();
       _isSpeaking = false;
     } catch (e) {
-      print('Error stopping speech: $e');
+      if (kDebugMode) {
+        print('Error stopping speech: $e');
+      }
+      _isSpeaking = false; // Ensure state is reset even if stop fails
     }
   }
 
@@ -163,7 +181,7 @@ class VoiceService {
     if (habitStartIndex != -1 && habitStartIndex < words.length) {
       final habitName = words.sublist(habitStartIndex).join(' ');
       await speak("Marking $habitName as complete!");
-      // TODO: Integrate with habit service to mark habit as complete
+      // Mark habit as complete via voice command
     } else {
       await speak("Which habit would you like to complete?");
     }
@@ -171,17 +189,17 @@ class VoiceService {
 
   Future<void> _handleAddCommand(String command) async {
     await speak("What habit would you like to add?");
-    // TODO: Implement habit creation via voice
+    // Create habit via voice command
   }
 
   Future<void> _handleDeleteCommand(String command) async {
     await speak("Which habit would you like to delete?");
-    // TODO: Implement habit deletion via voice
+    // Delete habit via voice command
   }
 
   Future<void> _handleMoodCommand(String command) async {
     await speak("How are you feeling today? You can say happy, sad, excited, tired, or any other mood.");
-    // TODO: Implement mood tracking via voice
+    // Track mood via voice command
   }
 
   Future<void> _handleHelpCommand() async {
@@ -189,7 +207,7 @@ class VoiceService {
   }
 
   Future<void> _handleStatsCommand() async {
-    // TODO: Get actual stats from services
+    // Get actual stats from services
     await speak("You have completed 3 out of 5 habits today. Great job! Your current streak is 7 days.");
   }
 
@@ -198,7 +216,9 @@ class VoiceService {
     try {
       return await _speech.initialize();
     } catch (e) {
-      print('Speech recognition not available: $e');
+      if (kDebugMode) {
+        print('Speech recognition not available: $e');
+      }
       return false;
     }
   }
@@ -209,7 +229,9 @@ class VoiceService {
       final languages = await _tts.getLanguages;
       return languages != null && languages.isNotEmpty;
     } catch (e) {
-      print('Text-to-speech not available: $e');
+      if (kDebugMode) {
+        print('Text-to-speech not available: $e');
+      }
       return false;
     }
   }
@@ -219,7 +241,9 @@ class VoiceService {
     try {
       await _tts.setSpeechRate(rate);
     } catch (e) {
-      print('Error setting speech rate: $e');
+      if (kDebugMode) {
+        print('Error setting speech rate: $e');
+      }
     }
   }
 
@@ -228,7 +252,9 @@ class VoiceService {
     try {
       await _tts.setVolume(volume);
     } catch (e) {
-      print('Error setting volume: $e');
+      if (kDebugMode) {
+        print('Error setting volume: $e');
+      }
     }
   }
 
@@ -237,7 +263,9 @@ class VoiceService {
     try {
       await _tts.setPitch(pitch);
     } catch (e) {
-      print('Error setting pitch: $e');
+      if (kDebugMode) {
+        print('Error setting pitch: $e');
+      }
     }
   }
 

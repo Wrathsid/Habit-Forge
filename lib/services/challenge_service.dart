@@ -346,8 +346,9 @@ class ChallengeService {
   }
 
   Map<String, dynamic> getChallengeStats(String challengeId) {
-    final challenge = _challenges.firstWhere((c) => c.id == challengeId);
-    final totalParticipants = challenge.participants.length;
+    try {
+      final challenge = _challenges.firstWhere((c) => c.id == challengeId);
+      final totalParticipants = challenge.participants.length;
     final completedParticipants = challenge.progress.length;
     final completionRate = totalParticipants > 0 ? completedParticipants / totalParticipants : 0.0;
 

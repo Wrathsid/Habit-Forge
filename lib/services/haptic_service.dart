@@ -33,7 +33,9 @@ class HapticService {
     try {
       await HapticFeedback.lightImpact();
     } catch (e) {
-      print('Haptic feedback not available: $e');
+      if (kDebugMode) {
+        print('Haptic feedback not available: $e');
+      }
     }
   }
 
@@ -44,7 +46,9 @@ class HapticService {
     try {
       await HapticFeedback.mediumImpact();
     } catch (e) {
-      print('Haptic feedback not available: $e');
+      if (kDebugMode) {
+        print('Haptic feedback not available: $e');
+      }
     }
   }
 
@@ -55,7 +59,9 @@ class HapticService {
     try {
       await HapticFeedback.heavyImpact();
     } catch (e) {
-      print('Haptic feedback not available: $e');
+      if (kDebugMode) {
+        print('Haptic feedback not available: $e');
+      }
     }
   }
 
@@ -66,7 +72,9 @@ class HapticService {
     try {
       await HapticFeedback.selectionClick();
     } catch (e) {
-      print('Haptic feedback not available: $e');
+      if (kDebugMode) {
+        print('Haptic feedback not available: $e');
+      }
     }
   }
 
@@ -82,7 +90,11 @@ class HapticService {
       await Future.delayed(const Duration(milliseconds: 100));
       await HapticFeedback.lightImpact();
     } catch (e) {
-      print('Haptic feedback not available: $e');
+      if (kDebugMode) {
+        print('Haptic feedback error: $e');
+      }
+      // Disable haptic feedback if it fails
+      _isHapticAvailable = false;
     }
   }
 
@@ -96,7 +108,11 @@ class HapticService {
       await Future.delayed(const Duration(milliseconds: 200));
       await HapticFeedback.heavyImpact();
     } catch (e) {
-      print('Haptic feedback not available: $e');
+      if (kDebugMode) {
+        print('Haptic feedback error: $e');
+      }
+      // Disable haptic feedback if it fails
+      _isHapticAvailable = false;
     }
   }
 
@@ -116,7 +132,11 @@ class HapticService {
       await Future.delayed(const Duration(milliseconds: 80));
       await HapticFeedback.lightImpact();
     } catch (e) {
-      print('Haptic feedback not available: $e');
+      if (kDebugMode) {
+        print('Haptic feedback error: $e');
+      }
+      // Disable haptic feedback if it fails
+      _isHapticAvailable = false;
     }
   }
 
@@ -136,7 +156,9 @@ class HapticService {
       await Future.delayed(const Duration(milliseconds: 120));
       await HapticFeedback.mediumImpact();
     } catch (e) {
-      print('Haptic feedback not available: $e');
+      if (kDebugMode) {
+        print('Haptic feedback not available: $e');
+      }
     }
   }
 
@@ -156,7 +178,9 @@ class HapticService {
       await Future.delayed(const Duration(milliseconds: 100));
       await HapticFeedback.heavyImpact();
     } catch (e) {
-      print('Haptic feedback not available: $e');
+      if (kDebugMode) {
+        print('Haptic feedback not available: $e');
+      }
     }
   }
 
@@ -178,7 +202,9 @@ class HapticService {
       await Future.delayed(const Duration(milliseconds: 90));
       await HapticFeedback.heavyImpact();
     } catch (e) {
-      print('Haptic feedback not available: $e');
+      if (kDebugMode) {
+        print('Haptic feedback not available: $e');
+      }
     }
   }
 
@@ -189,7 +215,7 @@ class HapticService {
     }
     
     try {
-      return await Vibration.hasVibrator() ?? false;
+      return await Vibration.hasVibrator();
     } catch (e) {
       print('Error checking haptic availability: $e');
       return false;
@@ -203,7 +229,9 @@ class HapticService {
     try {
       await Vibration.vibrate(pattern: pattern);
     } catch (e) {
-      print('Custom vibration pattern failed: $e');
+      if (kDebugMode) {
+        print('Custom vibration pattern failed: $e');
+      }
     }
   }
 }

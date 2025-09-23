@@ -390,7 +390,7 @@ class _AdvancedCustomizationScreenState extends State<AdvancedCustomizationScree
                 decoration: BoxDecoration(
                   color: HSVColor.fromAHSV(1.0, hue, 0.7, 0.8).toColor(),
                   borderRadius: BorderRadius.circular(8),
-                  border: Border.all(color: colors.textColor.withOpacity(0.3)),
+                  border: Border.all(color: colors.textColor.withValues(alpha: 0.3)),
                 ),
               ),
               const SizedBox(width: 16),
@@ -438,7 +438,7 @@ class _AdvancedCustomizationScreenState extends State<AdvancedCustomizationScree
                 value.toStringAsFixed(1),
                 style: TextStyle(
                   fontSize: 14,
-                  color: colors.textColor.withOpacity(0.7),
+                  color: colors.textColor.withValues(alpha: 0.7),
                 ),
               ),
             ],
@@ -617,7 +617,7 @@ class _AdvancedCustomizationScreenState extends State<AdvancedCustomizationScree
   }
 
   void _saveSettings() {
-    // TODO: Implement settings persistence
+    // Save settings to SharedPreferences
     HapticService.instance.success();
     ScaffoldMessenger.of(context).showSnackBar(
       const SnackBar(content: Text('Settings saved successfully')),

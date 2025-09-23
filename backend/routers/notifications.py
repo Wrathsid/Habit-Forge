@@ -18,7 +18,7 @@ class NotificationCreate(BaseModel):
     title: str
     body: str
     type: str
-    data: Optional[Dict[str, Any]] = {}
+    data: Optional[Dict[str, Any]] = None
     scheduled_for: Optional[str] = None
 
 @router.get("/optimal-times/{user_id}", response_model=Dict[str, Any])
@@ -27,6 +27,12 @@ async def get_optimal_notification_times(
     supabase: SupabaseClient = Depends(lambda: SupabaseClient())
 ):
     """Get optimal notification times for a user"""
+    if not user_id or not user_id.strip():
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail="User ID is required"
+        )
+    
     try:
         # Get user's habit completion patterns
         habits = await supabase.get_habits(user_id)
@@ -66,6 +72,24 @@ async def schedule_smart_notification(
     supabase: SupabaseClient = Depends(lambda: SupabaseClient())
 ):
     """Schedule a smart notification"""
+    if not user_id or not user_id.strip():
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail="User ID is required"
+        )
+    
+    if not habit_id or not habit_id.strip():
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail="Habit ID is required"
+        )
+    
+    if not type or not type.strip():
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail="Notification type is required"
+        )
+    
     try:
         notification_data = {
             'user_id': user_id,
@@ -77,6 +101,11 @@ async def schedule_smart_notification(
             'created_at': datetime.now().isoformat()
         }
         
+        if not supabase.client:
+            raise HTTPException(
+                status_code=status.HTTP_503_SERVICE_UNAVAILABLE,
+                detail="Database service unavailable"
+            )
         response = supabase.client.table('notifications').insert(notification_data).execute()
         return response.data[0] if response.data else {}
     except Exception as e:
@@ -93,7 +122,24 @@ async def get_user_notifications(
     supabase: SupabaseClient = Depends(lambda: SupabaseClient())
 ):
     """Get notifications for a user"""
+    if not user_id or not user_id.strip():
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail="User ID is required"
+        )
+    
+    if limit < 1 or limit > 100:
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail="Limit must be between 1 and 100"
+        )
+    
     try:
+        if not supabase.client:
+            raise HTTPException(
+                status_code=status.HTTP_503_SERVICE_UNAVAILABLE,
+                detail="Database service unavailable"
+            )
         response = supabase.client.table('notifications').select('*').eq('user_id', user_id).order('created_at', desc=True).limit(limit).execute()
         return response.data
     except Exception as e:
@@ -110,7 +156,24 @@ async def mark_notification_read(
     supabase: SupabaseClient = Depends(lambda: SupabaseClient())
 ):
     """Mark a notification as read"""
+    if not user_id or not user_id.strip():
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail="User ID is required"
+        )
+    
+    if not notification_id or not notification_id.strip():
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail="Notification ID is required"
+        )
+    
     try:
+        if not supabase.client:
+            raise HTTPException(
+                status_code=status.HTTP_503_SERVICE_UNAVAILABLE,
+                detail="Database service unavailable"
+            )
         response = supabase.client.table('notifications').update({'is_read': True}).eq('id', notification_id).eq('user_id', user_id).execute()
         return {"message": "Notification marked as read"}
     except Exception as e:
@@ -127,7 +190,24 @@ async def delete_notification(
     supabase: SupabaseClient = Depends(lambda: SupabaseClient())
 ):
     """Delete a notification"""
+    if not user_id or not user_id.strip():
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail="User ID is required"
+        )
+    
+    if not notification_id or not notification_id.strip():
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail="Notification ID is required"
+        )
+    
     try:
+        if not supabase.client:
+            raise HTTPException(
+                status_code=status.HTTP_503_SERVICE_UNAVAILABLE,
+                detail="Database service unavailable"
+            )
         response = supabase.client.table('notifications').delete().eq('id', notification_id).eq('user_id', user_id).execute()
         return {"message": "Notification deleted successfully"}
     except Exception as e:

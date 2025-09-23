@@ -152,7 +152,7 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
             '@${user.username}',
             style: TextStyle(
               fontSize: 16,
-              color: colors.textColor.withOpacity(0.7),
+              color: colors.textColor.withValues(alpha: 0.7),
             ),
           ),
           const SizedBox(height: 16),
@@ -182,14 +182,14 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
                 user.isOnline ? 'Online' : 'Offline',
                 style: TextStyle(
                   fontSize: 14,
-                  color: colors.textColor.withOpacity(0.7),
+                  color: colors.textColor.withValues(alpha: 0.7),
                 ),
               ),
               const SizedBox(width: 16),
               Container(
                 padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
                 decoration: BoxDecoration(
-                  color: Theme.of(context).colorScheme.primary.withOpacity(0.1),
+                  color: Theme.of(context).colorScheme.primary.withValues(alpha: 0.1),
                   borderRadius: BorderRadius.circular(16),
                 ),
                 child: Text(
@@ -212,7 +212,7 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
       decoration: BoxDecoration(
-        color: colors.textColor.withOpacity(0.05),
+        color: colors.textColor.withValues(alpha: 0.05),
         borderRadius: BorderRadius.circular(12),
       ),
       child: Text(
@@ -235,13 +235,13 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
           maxLines: 2,
           decoration: InputDecoration(
             hintText: 'What\'s on your mind?',
-            hintStyle: TextStyle(color: colors.textColor.withOpacity(0.5)),
+            hintStyle: TextStyle(color: colors.textColor.withValues(alpha: 0.5)),
             border: OutlineInputBorder(
               borderRadius: BorderRadius.circular(12),
               borderSide: BorderSide.none,
             ),
             filled: true,
-            fillColor: colors.textColor.withOpacity(0.05),
+            fillColor: colors.textColor.withValues(alpha: 0.05),
           ),
           style: TextStyle(color: colors.textColor),
         ),
@@ -253,7 +253,7 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
               onPressed: _cancelStatusEdit,
               child: Text(
                 'Cancel',
-                style: TextStyle(color: colors.textColor.withOpacity(0.7)),
+                style: TextStyle(color: colors.textColor.withValues(alpha: 0.7)),
               ),
             ),
             const SizedBox(width: 8),
@@ -334,7 +334,7 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
     return Container(
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
-        color: colors.textColor.withOpacity(0.05),
+        color: colors.textColor.withValues(alpha: 0.05),
         borderRadius: BorderRadius.circular(12),
       ),
       child: Column(
@@ -353,7 +353,7 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
             label,
             style: TextStyle(
               fontSize: 12,
-              color: colors.textColor.withOpacity(0.7),
+              color: colors.textColor.withValues(alpha: 0.7),
             ),
             textAlign: TextAlign.center,
           ),
@@ -384,7 +384,7 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
               'No achievements yet',
               style: TextStyle(
                 fontSize: 14,
-                color: colors.textColor.withOpacity(0.7),
+                color: colors.textColor.withValues(alpha: 0.7),
               ),
             )
           else
@@ -394,14 +394,14 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
     );
   }
 
-  Widget _buildAchievementItem(achievement, NeumorphicColors colors) {
+  Widget _buildAchievementItem(dynamic achievement, NeumorphicColors colors) {
     return Container(
       margin: const EdgeInsets.only(bottom: 12),
       padding: const EdgeInsets.all(12),
       decoration: BoxDecoration(
-        color: achievement.rarityColor.withOpacity(0.1),
+        color: achievement.rarityColor.withValues(alpha: 0.1),
         borderRadius: BorderRadius.circular(12),
-        border: Border.all(color: achievement.rarityColor.withOpacity(0.3)),
+        border: Border.all(color: achievement.rarityColor.withValues(alpha: 0.3)),
       ),
       child: Row(
         children: [
@@ -427,7 +427,7 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
                   achievement.description,
                   style: TextStyle(
                     fontSize: 12,
-                    color: colors.textColor.withOpacity(0.7),
+                    color: colors.textColor.withValues(alpha: 0.7),
                   ),
                 ),
               ],

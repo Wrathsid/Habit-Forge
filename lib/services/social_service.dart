@@ -191,16 +191,18 @@ class SocialService {
   Future<bool> sendFriendRequest(String userId) async {
     if (_currentUser == null) return false;
 
-    final existingFriend = _friends.firstWhere(
-      (f) => f.user.id == userId && f.user.id == _currentUser!.id,
-      orElse: () => throw StateError('No friend found'),
-    );
-
-    if (existingFriend != null) return false; // Already friends or request sent
+    try {
+      _friends.firstWhere(
+        (f) => f.user.id == userId && f.user.id == _currentUser!.id,
+      );
+      return false; // Already friends or request sent
+    } catch (e) {
+      // No existing friend found, continue
+    }
 
     final friend = Friend(
       id: const Uuid().v4(),
-      user: _users.firstWhere((u) => u.id == userId),
+      user: _users.firstWhere((u) => u.id == userId, orElse: () => throw Exception('User not found')),
       status: FriendStatus.pending,
       createdAt: DateTime.now(),
     );
@@ -283,7 +285,7 @@ class SocialService {
 
   User? getUserById(String userId) {
     try {
-      return _users.firstWhere((u) => u.id == userId);
+      return _users.firstWhere((u) => u.id == userId, orElse: () => throw Exception('User not found'));
     } catch (e) {
       return null;
     }

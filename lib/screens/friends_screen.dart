@@ -56,7 +56,7 @@ class _FriendsScreenState extends State<FriendsScreen> with SingleTickerProvider
         bottom: TabBar(
           controller: _tabController,
           labelColor: colors.textColor,
-          unselectedLabelColor: colors.textColor.withOpacity(0.5),
+          unselectedLabelColor: colors.textColor.withValues(alpha: 0.5),
           indicatorColor: Theme.of(context).colorScheme.primary,
           tabs: const [
             Tab(text: 'Friends'),
@@ -325,7 +325,7 @@ class _FriendsScreenState extends State<FriendsScreen> with SingleTickerProvider
                       '@${friend.user.username}',
                       style: TextStyle(
                         fontSize: 14,
-                        color: colors.textColor.withOpacity(0.7),
+                        color: colors.textColor.withValues(alpha: 0.7),
                       ),
                     ),
                     const SizedBox(height: 4),
@@ -344,7 +344,7 @@ class _FriendsScreenState extends State<FriendsScreen> with SingleTickerProvider
                           friend.user.isOnline ? 'Online' : 'Offline',
                           style: TextStyle(
                             fontSize: 12,
-                            color: colors.textColor.withOpacity(0.6),
+                            color: colors.textColor.withValues(alpha: 0.6),
                           ),
                         ),
                         const SizedBox(width: 12),
@@ -430,7 +430,7 @@ class _FriendsScreenState extends State<FriendsScreen> with SingleTickerProvider
                     '@${request.user.username}',
                     style: TextStyle(
                       fontSize: 14,
-                      color: colors.textColor.withOpacity(0.7),
+                      color: colors.textColor.withValues(alpha: 0.7),
                     ),
                   ),
                   const SizedBox(height: 4),
@@ -438,7 +438,7 @@ class _FriendsScreenState extends State<FriendsScreen> with SingleTickerProvider
                     'Level ${request.user.level} • ${request.user.totalXP} XP',
                     style: TextStyle(
                       fontSize: 12,
-                      color: colors.textColor.withOpacity(0.6),
+                      color: colors.textColor.withValues(alpha: 0.6),
                     ),
                   ),
                 ],
@@ -510,7 +510,7 @@ class _FriendsScreenState extends State<FriendsScreen> with SingleTickerProvider
                     '@${user.username}',
                     style: TextStyle(
                       fontSize: 14,
-                      color: colors.textColor.withOpacity(0.7),
+                      color: colors.textColor.withValues(alpha: 0.7),
                     ),
                   ),
                   const SizedBox(height: 4),
@@ -529,7 +529,7 @@ class _FriendsScreenState extends State<FriendsScreen> with SingleTickerProvider
                         '${user.totalXP} XP',
                         style: TextStyle(
                           fontSize: 12,
-                          color: colors.textColor.withOpacity(0.6),
+                          color: colors.textColor.withValues(alpha: 0.6),
                         ),
                       ),
                       const SizedBox(width: 12),
@@ -568,7 +568,7 @@ class _FriendsScreenState extends State<FriendsScreen> with SingleTickerProvider
           Icon(
             icon,
             size: 64,
-            color: colors.textColor.withOpacity(0.3),
+            color: colors.textColor.withValues(alpha: 0.3),
           ),
           const SizedBox(height: 16),
           Text(
@@ -584,7 +584,7 @@ class _FriendsScreenState extends State<FriendsScreen> with SingleTickerProvider
             message,
             style: TextStyle(
               fontSize: 14,
-              color: colors.textColor.withOpacity(0.7),
+              color: colors.textColor.withValues(alpha: 0.7),
             ),
             textAlign: TextAlign.center,
           ),

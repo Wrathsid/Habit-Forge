@@ -73,7 +73,7 @@ class _ReminderSettingsState extends State<ReminderSettings> {
               Switch(
                 value: widget.hasReminder,
                 onChanged: widget.onReminderChanged,
-                activeColor: Theme.of(context).colorScheme.primary,
+                activeThumbColor: Theme.of(context).colorScheme.primary,
               ),
             ],
           ),

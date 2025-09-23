@@ -28,6 +28,12 @@ async def get_social_insights(
     supabase: SupabaseClient = Depends(lambda: SupabaseClient())
 ):
     """Get social insights for a user"""
+    if not user_id or not user_id.strip():
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail="User ID is required"
+        )
+    
     try:
         friends = await supabase.get_friends(user_id)
         social_feed = await supabase.get_social_feed(user_id)
@@ -55,6 +61,12 @@ async def get_friends(
     supabase: SupabaseClient = Depends(lambda: SupabaseClient())
 ):
     """Get friends for a user"""
+    if not user_id or not user_id.strip():
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail="User ID is required"
+        )
+    
     try:
         friends = await supabase.get_friends(user_id)
         return friends
@@ -72,6 +84,24 @@ async def send_friend_request(
     supabase: SupabaseClient = Depends(lambda: SupabaseClient())
 ):
     """Send a friend request"""
+    if not user_id or not user_id.strip():
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail="User ID is required"
+        )
+    
+    if not friend_id or not friend_id.strip():
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail="Friend ID is required"
+        )
+    
+    if user_id == friend_id:
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail="Cannot send friend request to yourself"
+        )
+    
     try:
         friend_data = {
             'user_id': user_id,
@@ -96,6 +126,18 @@ async def get_social_feed(
     supabase: SupabaseClient = Depends(lambda: SupabaseClient())
 ):
     """Get social feed"""
+    if not user_id or not user_id.strip():
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail="User ID is required"
+        )
+    
+    if limit < 1 or limit > 100:
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail="Limit must be between 1 and 100"
+        )
+    
     try:
         social_feed = await supabase.get_social_feed(user_id, limit)
         return social_feed

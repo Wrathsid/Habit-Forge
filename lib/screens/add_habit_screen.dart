@@ -120,7 +120,7 @@ class _AddHabitScreenState extends State<AddHabitScreen> {
             decoration: InputDecoration(
               border: InputBorder.none,
               hintText: 'e.g., Morning Meditation',
-              hintStyle: TextStyle(color: colors.textColor.withOpacity(0.6)),
+              hintStyle: TextStyle(color: colors.textColor.withValues(alpha: 0.6)),
             ),
             validator: (value) {
               if (value == null || value.trim().isEmpty) {
@@ -156,7 +156,7 @@ class _AddHabitScreenState extends State<AddHabitScreen> {
             decoration: InputDecoration(
               border: InputBorder.none,
               hintText: 'Describe your habit...',
-              hintStyle: TextStyle(color: colors.textColor.withOpacity(0.6)),
+              hintStyle: TextStyle(color: colors.textColor.withValues(alpha: 0.6)),
             ),
           ),
         ),
@@ -186,7 +186,7 @@ class _AddHabitScreenState extends State<AddHabitScreen> {
             decoration: InputDecoration(
               border: InputBorder.none,
               hintText: '7',
-              hintStyle: TextStyle(color: colors.textColor.withOpacity(0.6)),
+              hintStyle: TextStyle(color: colors.textColor.withValues(alpha: 0.6)),
             ),
             validator: (value) {
               if (value == null || value.trim().isEmpty) {

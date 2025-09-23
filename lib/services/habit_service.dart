@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:flutter/foundation.dart';
 import '../models/habit.dart';
 import 'notification_service.dart';
 
@@ -14,21 +15,56 @@ class HabitService {
   List<Habit> get habits => List.unmodifiable(_habits);
 
   Future<void> loadHabits() async {
-    final prefs = await SharedPreferences.getInstance();
-    final habitsJson = prefs.getStringList(_habitsKey) ?? [];
-    
-    _habits = habitsJson
-        .map((json) => Habit.fromJson(jsonDecode(json)))
-        .toList();
+    try {
+      final prefs = await SharedPreferences.getInstance();
+      final habitsJson = prefs.getStringList(_habitsKey) ?? [];
+      
+      _habits = habitsJson
+          .map((json) {
+            try {
+              return Habit.fromJson(jsonDecode(json));
+            } catch (e) {
+              if (kDebugMode) {
+                print('Error parsing habit JSON: $e');
+              }
+              return null;
+            }
+          })
+          .where((habit) => habit != null)
+          .cast<Habit>()
+          .toList();
+    } catch (e) {
+      if (kDebugMode) {
+        print('Error loading habits: $e');
+      }
+      _habits = [];
+    }
   }
 
   Future<void> saveHabits() async {
-    final prefs = await SharedPreferences.getInstance();
-    final habitsJson = _habits
-        .map((habit) => jsonEncode(habit.toJson()))
-        .toList();
-    
-    await prefs.setStringList(_habitsKey, habitsJson);
+    try {
+      final prefs = await SharedPreferences.getInstance();
+      final habitsJson = _habits
+          .map((habit) {
+            try {
+              return jsonEncode(habit.toJson());
+            } catch (e) {
+              if (kDebugMode) {
+                print('Error encoding habit to JSON: $e');
+              }
+              return null;
+            }
+          })
+          .where((json) => json != null)
+          .cast<String>()
+          .toList();
+      
+      await prefs.setStringList(_habitsKey, habitsJson);
+    } catch (e) {
+      if (kDebugMode) {
+        print('Error saving habits: $e');
+      }
+    }
   }
 
   Future<void> addHabit(Habit habit) async {
@@ -151,8 +187,15 @@ class HabitService {
   }
 
   bool isCompletedToday(String habitId) {
-    final habit = _habits.firstWhere((h) => h.id == habitId);
-    return habit.isCompletedToday;
+    try {
+      final habit = _habits.firstWhere((h) => h.id == habitId);
+      return habit.isCompletedToday;
+    } catch (e) {
+      if (kDebugMode) {
+        print('Habit not found: $habitId');
+      }
+      return false;
+    }
   }
 
   Future<void> markComplete(String habitId) async {

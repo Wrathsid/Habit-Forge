@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:lucide_icons/lucide_icons.dart';
-import '../models/habit.dart';
-import '../models/mood.dart';
+// import '../models/habit.dart';
+// import '../models/mood.dart';
 import '../services/habit_service.dart';
 import '../services/mood_service.dart';
 import '../widgets/neumorphic_box.dart';
@@ -105,7 +105,7 @@ class _HabitCorrelationScreenState extends State<HabitCorrelationScreen> {
             'Discover which habits positively impact your mood',
             style: TextStyle(
               fontSize: 14,
-              color: colors.textColor.withOpacity(0.7),
+              color: colors.textColor.withValues(alpha: 0.7),
             ),
           ),
         ],
@@ -126,7 +126,7 @@ class _HabitCorrelationScreenState extends State<HabitCorrelationScreen> {
             'Analyzing your habits...',
             style: TextStyle(
               fontSize: 16,
-              color: colors.textColor.withOpacity(0.7),
+              color: colors.textColor.withValues(alpha: 0.7),
             ),
           ),
         ],
@@ -169,7 +169,7 @@ class _HabitCorrelationScreenState extends State<HabitCorrelationScreen> {
             Container(
               padding: const EdgeInsets.all(12),
               decoration: BoxDecoration(
-                color: impactColor.withOpacity(0.1),
+                color: impactColor.withValues(alpha: 0.1),
                 shape: BoxShape.circle,
               ),
               child: Icon(
@@ -218,7 +218,7 @@ class _HabitCorrelationScreenState extends State<HabitCorrelationScreen> {
                   'avg mood',
                   style: TextStyle(
                     fontSize: 12,
-                    color: colors.textColor.withOpacity(0.6),
+                    color: colors.textColor.withValues(alpha: 0.6),
                   ),
                 ),
               ],
@@ -237,7 +237,7 @@ class _HabitCorrelationScreenState extends State<HabitCorrelationScreen> {
           Icon(
             LucideIcons.barChart3,
             size: 64,
-            color: colors.textColor.withOpacity(0.3),
+            color: colors.textColor.withValues(alpha: 0.3),
           ),
           const SizedBox(height: 16),
           Text(
@@ -253,7 +253,7 @@ class _HabitCorrelationScreenState extends State<HabitCorrelationScreen> {
             'Complete some habits and track your mood\nto see correlations',
             style: TextStyle(
               fontSize: 14,
-              color: colors.textColor.withOpacity(0.7),
+              color: colors.textColor.withValues(alpha: 0.7),
             ),
             textAlign: TextAlign.center,
           ),
