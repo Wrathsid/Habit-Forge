@@ -5,7 +5,7 @@
   
   <h3>Build Better Habits with Advanced Neumorphic Design</h3>
   
-  [![GitHub release](https://img.shields.io/github/release/yourusername/habitforge.svg)](https://github.com/yourusername/habitforge/releases)
+  [![GitHub release](https://img.shields.io/github/release/Wrathsid/habit-tracker-app.svg)](https://github.com/Wrathsid/habit-tracker-app/releases)
   [![Flutter](https://img.shields.io/badge/Flutter-3.24.0-blue.svg)](https://flutter.dev/)
   [![License](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
   [![Android](https://img.shields.io/badge/Android-5.0%2B-green.svg)](https://www.android.com/)
@@ -30,7 +30,7 @@ HabitForge is a cutting-edge habit tracking application that combines beautiful 
 
 ### 📥 Download & Install
 
-1. **Download the latest APK** from the [Releases](https://github.com/yourusername/habitforge/releases) page
+1. **Download the latest APK** from the [Releases](https://github.com/Wrathsid/habit-tracker-app/releases) page
 2. **Enable Unknown Sources**:
    - Go to Settings → Security → Unknown Sources
    - Enable installation from unknown sources
@@ -59,8 +59,8 @@ HabitForge is a cutting-edge habit tracking application that combines beautiful 
 
 1. **Clone the repository**:
    ```bash
-   git clone https://github.com/yourusername/habitforge.git
-   cd habitforge
+   git clone https://github.com/Wrathsid/habit-tracker-app.git
+   cd habit-tracker-app
    ```
 
 2. **Install dependencies**:
@@ -241,8 +241,8 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 ### Getting Help
 
 - **Documentation**: Check this README and inline code comments
-- **Issues**: Report bugs on [GitHub Issues](https://github.com/yourusername/habitforge/issues)
-- **Discussions**: Join our [GitHub Discussions](https://github.com/yourusername/habitforge/discussions)
+- **Issues**: Report bugs on [GitHub Issues](https://github.com/Wrathsid/habit-tracker-app/issues)
+- **Discussions**: Join our [GitHub Discussions](https://github.com/Wrathsid/habit-tracker-app/discussions)
 
 ### Common Issues
 
@@ -286,7 +286,7 @@ A: Ensure you have an internet connection and check your Supabase configuration.
 <div align="center">
   <p>Made with ❤️ by the HabitForge Team</p>
   <p>
-    <a href="https://github.com/yourusername/habitforge">GitHub</a> •
+    <a href="https://github.com/Wrathsid/habit-tracker-app">GitHub</a> •
     <a href="https://twitter.com/habitforge">Twitter</a> •
     <a href="mailto:support@habitforge.app">Email</a>
   </p>
