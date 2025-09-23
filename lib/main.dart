@@ -16,7 +16,6 @@ import 'config/env_config.dart';
 import 'screens/add_habit_screen.dart';
 import 'screens/edit_habit_screen.dart';
 import 'screens/analytics_screen.dart';
-import 'screens/reminder_management_screen.dart';
 import 'screens/advanced_settings_screen.dart';
 import 'screens/user_profile_screen.dart';
 import 'screens/challenges_screen.dart';
@@ -440,9 +439,7 @@ class _HomePageState extends State<HomePage> {
       {'icon': LucideIcons.users, 'action': _openFriends, 'tooltip': 'Friends'},
       {'icon': LucideIcons.target, 'action': _openChallenges, 'tooltip': 'Challenges'},
       {'icon': LucideIcons.messageSquare, 'action': _openSocialFeed, 'tooltip': 'Social Feed'},
-      {'icon': LucideIcons.bell, 'action': _openReminderManagement, 'tooltip': 'Reminders'},
       {'icon': LucideIcons.settings, 'action': _openNotificationManagement, 'tooltip': 'Notifications'},
-      {'icon': LucideIcons.partyPopper, 'action': _openCelebrationCenter, 'tooltip': 'Celebrations'},
       {'icon': LucideIcons.barChart3, 'action': _openAnalytics, 'tooltip': 'Analytics'},
       {'icon': LucideIcons.settings, 'action': _openAdvancedSettings, 'tooltip': 'Settings'},
       {'icon': LucideIcons.user, 'action': _openUserProfile, 'tooltip': 'Profile'},
@@ -692,14 +689,6 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
-  void _openReminderManagement() async {
-    await Navigator.push(
-      context,
-      MaterialPageRoute(
-        builder: (context) => const ReminderManagementScreen(),
-      ),
-    );
-  }
 
   void _openAdvancedSettings() async {
     await Navigator.push(
@@ -773,14 +762,6 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
-  void _openCelebrationCenter() async {
-    await Navigator.push(
-      context,
-      MaterialPageRoute(
-        builder: (context) => const CelebrationNotificationScreen(),
-      ),
-    );
-  }
 
   void _openAdvancedCustomization() async {
     await Navigator.push(

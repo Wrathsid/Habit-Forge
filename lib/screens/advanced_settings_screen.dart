@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:lucide_icons/lucide_icons.dart';
 import '../widgets/neumorphic_box.dart';
 import '../widgets/neumorphic_colors.dart';
+import 'celebration_notification_screen.dart';
 
 class AdvancedSettingsScreen extends StatefulWidget {
   const AdvancedSettingsScreen({super.key});
@@ -87,6 +88,10 @@ class _AdvancedSettingsScreenState extends State<AdvancedSettingsScreen> {
                 
                 _buildSectionHeader('Features', LucideIcons.settings, colors),
                 _buildFeatureSettings(colors),
+                const SizedBox(height: 24),
+                
+                _buildSectionHeader('Celebration Center', LucideIcons.partyPopper, colors),
+                _buildCelebrationSettings(colors),
                 const SizedBox(height: 24),
                 
                 _buildSectionHeader('Data & Privacy', LucideIcons.shield, colors),
@@ -229,6 +234,31 @@ class _AdvancedSettingsScreenState extends State<AdvancedSettingsScreen> {
             _enableAnalytics,
             (value) => setState(() => _enableAnalytics = value),
             colors,
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildCelebrationSettings(NeumorphicColors colors) {
+    return NeumorphicBox(
+      padding: const EdgeInsets.all(16),
+      child: Column(
+        children: [
+          _buildSwitchTile(
+            'Celebration Animations',
+            'Animated celebrations for achievements',
+            _enableCelebrationAnimations,
+            (value) => setState(() => _enableCelebrationAnimations = value),
+            colors,
+          ),
+          _buildDivider(colors),
+          _buildActionTile(
+            'Celebration Center',
+            'Test and customize celebration notifications',
+            () => _openCelebrationCenter(),
+            colors,
+            LucideIcons.partyPopper,
           ),
         ],
       ),
@@ -574,6 +604,15 @@ class _AdvancedSettingsScreenState extends State<AdvancedSettingsScreen> {
   void _deleteAllData() {
     ScaffoldMessenger.of(context).showSnackBar(
       const SnackBar(content: Text('All data deleted')),
+    );
+  }
+
+  void _openCelebrationCenter() async {
+    await Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => const CelebrationNotificationScreen(),
+      ),
     );
   }
 }
