@@ -256,9 +256,9 @@ class _AdvancedSettingsScreenState extends State<AdvancedSettingsScreen> {
           _buildActionTile(
             'Celebration Center',
             'Test and customize celebration notifications',
+            LucideIcons.partyPopper,
             () => _openCelebrationCenter(),
             colors,
-            LucideIcons.partyPopper,
           ),
         ],
       ),

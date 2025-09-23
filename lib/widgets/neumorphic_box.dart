@@ -487,6 +487,26 @@ class _NeumorphicBoxState extends State<NeumorphicBox>
         shadowIntensity = 0.0;
         hoverIntensity = 0.0;
         break;
+      case NeumorphicEffect.floating:
+        shadowIntensity = isPressed ? 0.2 : 0.4;
+        hoverIntensity = 0.2;
+        break;
+      case NeumorphicEffect.pressed:
+        shadowIntensity = 0.1;
+        hoverIntensity = 0.0;
+        break;
+      case NeumorphicEffect.embossed:
+        shadowIntensity = isPressed ? 0.2 : 0.3;
+        hoverIntensity = 0.1;
+        break;
+      case NeumorphicEffect.gradient:
+        shadowIntensity = 0.0;
+        hoverIntensity = 0.0;
+        break;
+      case NeumorphicEffect.glass:
+        shadowIntensity = 0.0;
+        hoverIntensity = 0.0;
+        break;
     }
 
     // Add hover effect intensity
